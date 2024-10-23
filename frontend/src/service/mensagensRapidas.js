@@ -15,9 +15,9 @@ export function ListarMensagensRapidas () {
   })
 }
 
-export function AlterarMensagemRapida (data) {
+export function AlterarMensagemRapida (id, data) {
   return request({
-    url: `/fastreply/${data.id}`,
+    url: `/fastreply/${id}`,
     method: 'put',
     data
   })
@@ -27,5 +27,17 @@ export function DeletarMensagemRapida (data) {
   return request({
     url: `/fastreply/${data.id}`,
     method: 'delete'
+  })
+}
+
+// Função para deletar uma imagem específica associada à mensagem rápida
+export function DeletarImagemMensagemRapida (fastReplyId, mediaUrl) {
+  return request({
+    url: '/fastreply/delete-images',
+    method: 'post',
+    data: {
+      fastReplyId,
+      mediaUrl
+    }
   })
 }
