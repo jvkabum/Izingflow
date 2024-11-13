@@ -1,0 +1,494 @@
+backend/
+
+src/
+├── models/                                  # Modelos de dados
+│   ├── ApiConfig.ts                         # Define as configurações da API.
+│   ├── ApiMessage.ts                        # Representa mensagens enviadas e recebidas pela API.
+│   ├── AutoReply.ts                         # Gerencia mensagens automáticas.
+│   ├── AutoReplyLogs.ts                     # Registra mensagens automáticas enviadas.
+│   ├── Campaign.ts                          # Modelo para campanhas de marketing ou comunicação.
+│   ├── CampaignContacts.ts                  # Relaciona contatos com campanhas específicas.
+│   ├── ChatFlow.ts                          # Define fluxos de interação no chat.
+│   ├── Contact.ts                           # Informações de contatos, como nome e telefone.
+│   ├── ContactCustomField.ts                # Campos personalizados para contatos.
+│   ├── ContactTag.ts                        # Tags atribuídas a contatos para organização.
+│   ├── ContactWallet.ts                     # Informações sobre carteiras digitais.
+│   ├── FastReply.ts                         # Respostas rápidas para comunicação.
+│   ├── LogTicket.ts                         # Registros de tickets de suporte.
+│   ├── Message.ts                           # Representa mensagens trocadas no sistema.
+│   ├── MessageOffLine.ts                    # Mensagens recebidas quando o usuário está offline.
+│   ├── Queue.ts                             # Gerencia filas de atendimento.
+│   ├── Setting.ts                           # Configurações gerais do sistema.
+│   ├── StepsReply.ts                        # Etapas de resposta em fluxos de atendimento.
+│   ├── StepsReplyAction.ts                  # Ações correspondentes às etapas de resposta.
+│   ├── tabela.js                            # (Único arquivo .js) Potencialmente configuração de tabela.
+│   ├── Tag.ts                               # Modelo que gerencia tags para diferentes elementos.
+│   ├── Tenant.ts                            # Representa inquilinos em um sistema multi-tenant.
+│   ├── Ticket.ts                            # Gerencia tickets de suporte.
+│   ├── TicketLog.ts                         # Registra atividades relacionadas a tickets.
+│   ├── User.ts                              # Representa usuários do sistema.
+│   ├── UserMessagesLog.ts                   # Registra mensagens enviadas ou recebidas por usuários.
+│   ├── UsersQueues.ts                       # Gerencia filas específicas para usuários.
+│   └── Whatsapp.ts                          # Integrações com o WhatsApp.
+
+├── middleware/                              # Middleware da aplicação
+│   ├── isAPIAuth.ts                         # Verificação de autenticação da API.
+│   ├── isAuth.ts                            # Middleware para autenticação geral.
+│   ├── isAuthAdmin.ts                       # Verifica se o usuário é um admin.
+│   └── validateDays.ts                      # Valida se os dias são corretos em uma configuração.
+
+├── jobs/                                    # Tarefas agendadas ou em segundo plano
+│   ├── ClosePendingTicketsJob.ts            # Fecha tickets pendentes automaticamente.
+│   ├── Consumer360Job.ts                    # Tarefas para o consumidor do serviço 360.
+│   ├── Index.ts                             # Arquivo principal de tarefas agendadas.
+│   ├── SendMessageAPI.ts                    # Envia mensagens através da API.
+│   ├── SendMessages.ts                      # Envia mensagens em lote.
+│   ├── SendMessageScheduled.ts              # Envio de mensagens agendadas.
+│   ├── SendMessageWhatsappBusinessHours.ts  # Envia mensagens em horários comerciais do WhatsApp.
+│   ├── SendMessageWhatsappCampaign.ts       # Envia mensagens de campanha do WhatsApp.
+│   ├── VerifyTicketsChatBotInactives.ts     # Verifica tickets inativos do chatbot.
+│   └── WebHooksAPI.ts                       # Gerencia WebHooks da API.
+
+├── errors/                                  # Tratamento de erros
+│   └── AppError.ts                          # Classe para erros personalizados da aplicação.
+
+├── config/                                  # Configurações da aplicação
+│   ├── auth.ts                              # Configurações de autenticação.
+│   ├── database.ts                          # Configurações de conexão com o banco de dados.
+│   ├── upload.ts                            # Configurações de upload de arquivos.
+│   └── webHooks.dev                         # Configurações para WebHooks.
+
+├── utils/                                   # Funções utilitárias
+│   ├── logger.ts                            # Funcionalidades de logging.
+│   ├── defaultConstants.ts                  # Constantes padrão da aplicação.
+│   ├── pupa.ts                              # Funções relacionadas ao pupa.
+│   └── sleepRandomTime.ts                   # Função para pausar a execução por um tempo aleatório.
+
+├── services/                                # Lógica de negócio e serviços
+│   ├── MessengerChannelServices/            # Serviços para canais de mensagens.
+│   │   └── MessengerConsumer.ts             # Consumidor de mensagens.
+│   │   └── MessengerHandleMessage.ts        # Manipulação de mensagens.
+│   │   └── MessengerMarkRead.ts             # Marca mensagens como lidas.
+│   │   └── MessengerSendMessagesSystem.ts   # Envia mensagens no sistema.
+│   │   └── MessengerShowChannel.ts          # Exibe canais de mensagem.
+│   │   └── MessengerTypes.ts                # Tipos de mensagens.
+│   │   └── MessengerVerifyContact.ts        # Verifica contatos no Messenger.
+│   │   └── MessengerVerifyMediaMessage.ts   # Verifica mensagens de mídia.
+│   │   └── MessengerVerifyMessage.ts        # Verifica mensagens.
+│   │   └── StartMessengerBot.ts             # Inicializa o bot do Messenger.
+│   ├── FacebookServices/                    # Serviços para integração com o Facebook.
+│   │   └── GetTokenAndLinkedPage.ts         # Obtém token e página vinculada.
+│   │   └── SetLogoutLinkedPage.ts           # Define logout para página vinculada.
+│   ├── ApiConfigServices/                   # Serviços de configuração de API.
+│   │   └── CreateApiConfigService.ts        # Cria configuração da API.
+│   │   └── DeleteApiConfigService.ts        # Deleta configuração da API.
+│   │   └── ListApiConfigService.ts          # Lista configurações da API.
+│   │   └── RenewApiConfigTokenService.ts    # Renova token de configuração da API.
+│   │   └── UpdateApiConfigService.ts        # Atualiza configuração da API.
+│   ├── CampaignServices/                    # Serviços relacionados a campanhas.
+│   │   └── CancelCampaignService.ts         # Cancela uma campanha.
+│   │   └── CreateCampaignService.ts         # Cria uma nova campanha.
+│   │   └── DeleteCampaignService.ts          # Deleta uma campanha.
+│   │   └── ListCampaignService.ts             # Lista campanhas.
+│   │   └── StartCampaignService.ts             # Inicia uma campanha.
+│   │   └── UpdateCampaignService.ts             # Atualiza uma campanha.
+│   ├── TenantServices/                           # Serviços para gerenciamento de tenants.
+│   │   └── ShowBusinessHoursAndMessageService.ts  # Mostra horário de funcionamento e mensagens.
+│   │   └── UpdateBusinessHoursService.ts          # Atualiza horários de funcionamento.
+│   │   └── UpdateMessageBusinessHoursService.ts   # Atualiza mensagens de horário.
+│   ├── QueueServices/                             # Serviços relacionados a filas.
+│   │   └── CreateQueueService.ts                  # Cria uma nova fila.
+│   │   └── DeleteQueueService.ts                  # Deleta uma fila.
+│   │   └── ListQueueService.ts                    # Lista filas.
+│   │   └── UpdateQueueService.ts                  # Atualiza uma fila.
+│   ├── CampaignContactsServices/                  # Serviços para contatos de campanhas.
+│   │   └── CreateCampaignContactsService.ts       # Cria contatos para campanhas.
+│   │   └── DeleteAllCampaignContactsService.ts    # Deleta todos os contatos de uma campanha.
+│   │   └── DeleteCampaignContactsService.ts       # Deleta contatos específicos de uma campanha.
+│   │   └── ListCampaignContactsService.ts         # Lista contatos de campanhas.
+│   ├── WbotServices/                              # Serviços para WhatsApp Bot.
+│   │   └── CheckIsValidContact.ts                 # Verifica se um contato é válido.
+│   │   └── DeleteWhatsAppMessage.ts               # Deleta mensagens do WhatsApp.
+│   │   └── EditWhatsAppMessage.ts                 # Edita mensagens do WhatsApp.
+│   │   └── GetProfilePicUrl.ts                    # Obtém a URL da foto do perfil.
+│   │   └── ImportContactsService.ts               # Importa contatos.
+│   │   └── ImportFileContactsService.ts           # Importa contatos de arquivo.
+│   │   └── SendMessage.ts                         # Envia mensagens do WhatsApp.
+│   │   └── SendMessagesScheduleWbot.ts            # Envia mensagens programadas.
+│   │   └── SendMessagesSystemWbot.ts              # Envia mensagens pelo sistema.
+│   │   └── SendOffLineMessagesWbot.ts             # Envia mensagens quando offline.
+│   │   └── SendWhatsAppMedia.ts                   # Envia mídia pelo WhatsApp.
+│   │   └── SendWhatsAppMessage.ts                 # Envia mensagens pelo WhatsApp.
+│   │   └── StartAllWhatsAppsSessions.ts           # Inicia todas as sessões do WhatsApp.
+│   │   └── StartWhatsAppSession.ts                # Inicia uma sessão do WhatsApp.
+│   │   └── StartWhatsAppSessionVerify.ts          # Verifica a sessão do WhatsApp.
+│   │   └── SyncContactsWhatsappInstanceService.ts # Sincroniza contatos do WhatsApp.
+│   │   └── SyncUnreadMessagesWbot.ts              # Sincroniza mensagens não lidas.
+│   │   └── VerifyCall.ts                          # Verifica chamadas.
+│   │   └── wbotMessageListener.ts                 # Ouve mensagens do bot.
+│   │   └── wbotMonitor.ts                         # Monitora o bot do WhatsApp.
+│   ├── ChatFlowServices/                          # Serviços para fluxos de chat.
+│   │   └── BuildSendMessageService.ts             # Constrói o serviço de envio de mensagens.
+│   │   └── CreateChatFlowService.ts               # Cria um novo fluxo de chat.
+│   │   └── DefinedUserBotService.ts               # Define o serviço do bot do usuário.
+│   │   └── DeleteChatFlowService.ts               # Deleta um fluxo de chat.
+│   │   └── IsContactTest.ts                       # Testa se um contato é válido.
+│   │   └── ListChatFlowService.ts                 # Lista fluxos de chat.
+│   │   └── UpdateChatFlowService.ts               # Atualiza um fluxo de chat.
+│   │   └── VerifyStepsChatFlowTicket.ts           # Verifica os passos em um fluxo de chat.
+│   ├── UserServices/                              # Serviços relacionados a usuários.
+│   │   └── AuthUserService.ts                     # Serviço de autenticação de usuários.
+│   │   └── CreateUserService.ts                   # Cria um novo usuário.
+│   │   └── DeleteUserService.ts                   # Deleta um usuário.
+│   │   └── ListUsersService.ts                     # Lista usuários.
+│   │   └── ShowUserService.ts                       # Mostra informações de um usuário.
+│   │   └── UpdateUserConfigsService.ts               # Atualiza configurações de um usuário.
+│   │   └── UpdateUserService.ts                      # Atualiza um usuário.
+│   ├── WhatsappService/                              # Serviço para WhatsApp.
+│   │   └── CreateWhatsAppService.ts                  # Cria uma nova integração com WhatsApp.
+│   │   └── DeleteWhatsAppService.ts                  # Deleta a integração do WhatsApp.
+│   │   └── ListWhatsAppsService.ts                   # Lista integrações do WhatsApp.
+│   │   └── ShowWhatsAppService.ts                    # Mostra detalhes de uma integração do WhatsApp.
+│   │   └── UpdateWhatsAppService.ts                  # Atualiza a integração do WhatsApp.
+│   ├── TagServices/                                  # Serviços para gerenciamento de tags.
+│   │   └── CreateTagService.ts                       # Cria uma nova tag.
+│   │   └── DeleteTagService.ts                       # Deleta uma tag.
+│   │   └── ListTagService.ts                         # Lista tags.
+│   │   └── UpdateTagService.ts                       # Atualiza uma tag.
+│   ├── SettingServices/                              # Serviços para gerenciamento de configurações.
+│   │   └── ClosePendingTicketsService.ts             # Fecha tickets pendentes.
+│   │   └── ConfiguraFechamentoTicketService.ts       # Configura fechamento de tickets.
+│   │   └── ListSettingsService.ts                    # Lista configurações.
+│   │   └── UpdateSettingService.ts                   # Atualiza uma configuração.
+│   ├── TbotServices/                                 # Serviços para Telegram Bot.
+│   │   └── HandleMessageTelegram.ts                  # Manipula mensagens do Telegram.
+│   │   └── StartTbotSession.ts                       # Inicia uma sessão do Telegram Bot.
+│   │   └── tbotMessageListener.ts                    # Ouve mensagens do Telegram Bot.
+│   │   └── telegramAPIAppKeys.ts                     # Gerencia as chaves da API do Telegram.
+│   │   └── TelegramSendMessagesSystem.ts             # Envia mensagens pelo sistema do Telegram.
+│   │   └── TelegramVerifyContact.ts                  # Verifica contatos no Telegram.
+│   │   └── TelegramVerifyMediaMessage.ts             # Verifica mensagens de mídia no Telegram.
+│   │   └── TelegramVerifyMessage.ts                  # Verifica mensagens no Telegram.
+│   │   └── StartInstaBotSession.ts                   # Inicia uma sessão do bot do Instagram.
+│   ├── FastReplyServices/                            # Serviços para respostas rápidas.
+│   │   └── CreateFastReplyService.ts                 # Cria uma nova resposta rápida.
+│   │   └── DeleteFastReplyImageService.ts            # Deleta uma imagem de resposta rápida.
+│   │   └── DeleteFastReplyService.ts                 # Deleta uma resposta rápida.
+│   │   └── ListFastReplyService.ts                   # Lista respostas rápidas.
+│   │   └── UpdateFastReplyService.ts                 # Atualiza uma resposta rápida.
+│   ├── AutoReplyServices/                            # Serviços para auto-respostas.
+│   │   └── CreateAutoReplyLogsService.ts             # Cria registros de auto-respostas.
+│   │   └── CreateAutoReplyService.ts                 # Cria uma nova auto-resposta.
+│   │   └── DeleteAutoReplyService.ts                 # Deleta uma auto-resposta.
+│   │   └── ListAutoReplyService.ts                   # Lista auto-respostas.
+│   │   └── ShowStepAutoReplyMessageService.ts        # Mostra um passo da auto-resposta.
+│   │   └── UpdateAutoReplyService.ts                 # Atualiza uma auto-resposta.
+│   │   └── VerifyActionStepAutoReplyService.ts       # Verifica ações em passos de auto-resposta.
+│   │   ├── StepsReplyActionServices/                 # Ações relacionadas a respostas em etapas.
+│   │   │   └── CreateStepsReplyActionService.ts      # Cria uma nova ação de resposta em passo.
+│   │   │   └── DeleteStepsReplyActionService.ts      # Deleta uma ação de resposta em passo.
+│   │   │   └── UpdateStepsReplyActionService.ts      # Atualiza uma ação de resposta em passo.
+│   │   └── StepsReplyServices/                       # Serviços para gerenciamento de respostas em etapas.
+│   │   │   └── CreateStepsReplyService.ts            # Cria uma nova resposta em passo.
+│   │   │   └── DeleteStepsReplyService.ts            # Deleta uma resposta em passo.
+│   │   │   └── UpdateStepsReplyService.ts            # Atualiza uma resposta em passo.
+│   ├── Statistics/                                   # Serviços para gerenciamento de estatísticas.
+│   │   └── ContactsReportService.ts                  # Gera relatórios sobre contatos.
+│   │   └── DashTicketsAndTimes.ts                    # Cria dashboards de tickets e tempo.
+│   │   └── DashTicketsChannels.ts                    # Cria dashboards de tickets por canal.
+│   │   └── DashTicketsEvolutionByPeriod.ts           # Evolução de tickets por período.
+│   │   └── DashTicketsEvolutionChannels.ts           # Evolução de tickets por canal.
+│   │   └── DashTicketsPerUsersDetail.ts              # Detalhes de tickets por usuário.
+│   │   └── DashTicketsQueue.ts                       # Informações de tickets em filas.
+│   │   └── StatisticsPerUsers.ts                     # Estatísticas por usuário.
+│   │   └── TicketsQueueService.ts                    # Gerencia filas de tickets.
+│   ├── TicketServices/                               # Serviços para gerenciamento de tickets.
+│   │   └── CloseTicketService.ts                     # Fecha um ticket.
+│   │   └── CreateLogTicketService.ts                 # Cria um log de ticket.
+│   │   └── CreateTicketService.ts                    # Cria um novo ticket.
+│   │   └── DeleteTicketService.ts                    # Deleta um ticket.
+│   │   └── FindOrCreateTicketService.ts              # Encontra ou cria um ticket.
+│   │   └── FindUpdateTicketsInactiveChatBot.ts       # Encontra e atualiza tickets inativos do chatbot.
+│   │   └── isAPIAuth.ts                              # Verifica a autenticação da API.
+│   │   └── isAuth.ts                                 # Verifica a autenticação do usuário.
+│   │   └── isAuthAdmin.ts                            # Verifica se o usuário é um admin.
+│   │   └── ListTicketsService.ts                     # Lista tickets.
+│   │   └── ShowLogTicketService.ts                   # Mostra logs de tickets.
+│   │   └── ShowTicketService.ts                      # Mostra detalhes de um ticket.
+│   │   └── UpdateTicketService.ts                    # Atualiza um ticket.
+│   ├── ContactServices/                              # Serviços para gerenciamento de contatos.
+│   │   └── CreateContactService.ts                   # Cria um novo contato.
+│   │   └── CreateOrUpdateContactService.ts           # Cria ou atualiza um contato.
+│   │   └── DeleteContactService.ts                   # Deleta um contato.
+│   │   └── ListContactsService.ts                    # Lista contatos.
+│   │   └── ShowContactService.ts                     # Mostra informações de um contato.
+│   │   └── UpdateContactService.ts                   # Atualiza um contato.
+│   │   └── UpdateContactTagsService.ts               # Atualiza tags de um contato.
+│   │   └── UpdateContactWalletsService.ts            # Atualiza carteiras de um contato.
+│   ├── MessageServices/                              # Serviços para gerenciamento de mensagens.
+│   │   └── CreateForwardMessageService.ts            # Cria um serviço para mensagens encaminhadas.
+│   │   └── CreateMessageOfflineService.ts            # Cria mensagens offline.
+│   │   └── CreateMessageService.ts                   # Cria uma nova mensagem.
+│   │   └── CreateMessageSystemService.ts             # Cria serviço para mensagens do sistema.
+│   │   └── isMessageExistsService.ts                 # Verifica se uma mensagem existe.
+│   │   └── ListMessagesService.ts                    # Lista mensagens.
+│   ├── WABA360/                                      # Serviços para WhatsApp Business API 360.
+│   │   └── CheckContact.ts                           # Verifica se um contato é válido.
+│   │   └── Consumer360.ts                            # Processa informações do consumidor 360.
+│   │   └── GetMediaWaba360.ts                        # Obtém mídia do WABA 360.
+│   │   └── GetRegisteredPhone.ts                     # Obtém telefone registrado.
+│   │   └── HandleMessage360.ts                       # Manipula mensagens do WABA 360.
+│   │   └── SentMessage.ts                            # Envia mensagem.
+│   │   └── SetAboutProfileInfo.ts                    # Define informações do perfil.
+│   │   └── SetBusinessProfile.ts                     # Define o perfil de negócios.
+│   │   └── SetPhotoProfile.ts                        # Define a foto do perfil.
+│   │   └── SetWebHookUrl.ts                          # Define a URL do WebHook.
+│   │   └── StartWaba360.ts                           # Inicia a integração com WABA 360.
+│   │   └── UploadMedia.ts                            # Faz upload de mídia.
+│   │   └── VerifyContactWaba360.ts                   # Verifica contatos no WABA 360.
+│   │   └── VerifyMediaMessage360.ts                  # Verifica mensagens de mídia no WABA 360.
+│   │   └── VerifyMessage360.ts                       # Verifica mensagens no WABA 360.
+│   │   └── Waba360SendMessagesSystem.ts              # Envia mensagens do sistema WABA 360.
+│   └── ApiMessageService/                            # Serviço para mensagens de API.
+│   │   └── UpsertMessageAPIService                   # Atualiza ou insere mensagens na API.
+
+├── __tests__/                                        # Testes da aplicação
+│   ├── .DS_Store                                     # Arquivo de sistema, não relevante para a aplicação.
+│   ├── utils/                                        # Testes de utilitários
+│   │   └── __logger.ts                               # Testes para o logger.
+│   │   └── defaultConstants.ts                       # Testes para constantes padrão.
+│   │   └── logger.ts                                 # Testes para funções de logging.
+│   │   └── pupa.ts                                   # Testes para funcionalidades do pupa.
+│   │   └── sleepRandomTime.ts                        # Testes para a função de dormir por um período aleatório.
+
+├── database/                                         # Estrutura de banco de dados
+│   ├── seeds/                                        # Dados de seed para o banco de dados
+│   │   └── 20200904070001-create-default-tenant.ts   # Criação de tenant padrão.
+│   │   └── 20200904070004-create-default-settings.ts # Criação de configurações padrão.
+│   │   └── 20200904070005-create-default-users.ts    # Criação de usuários padrão.
+│   │   └── 20200904070006-create-default-channels.ts # Criação de canais padrão.
+│   │   └── 20240517000001-create-default-super.ts    # Criação de super usuário padrão.
+│   │   └── 20240522000001-update-table-tenants.ts    # Atualiza a tabela de tenants.
+│   └── migrations/                                   # Migrações de banco de dados
+│       └── migrations/                               # Diretório para migrações específicas.
+
+├── helpers/                                         # Helpers gerais
+│   ├── CheckChatBotFlowWelcome.ts                  # Valida flow de boas-vindas do chatbot.
+│   ├── CheckChatBotWelcome.ts                     # Verifica se o chatbot está funcionando corretamente.
+│   ├── CheckContactOpenTickets.ts                # Valida contatos com tickets abertos.
+│   ├── CheckSettings.ts                         # Verifica configurações do sistema.
+│   ├── CreateTokens.ts                         # Lida com a criação de tokens.
+│   ├── DeleteMessageSystem.ts                 # Deleta mensagens no sistema.
+│   ├── GetDefaultWhatsApp.ts                 # Obtém configurações padrão do WhatsApp.
+│   ├── getQuotedForMessageId.ts              # Obtém a mensagem citada por ID.
+│   ├── GetTicketWbot.ts                      # Obtém tickets do WhatsApp bot.
+│   ├── GetWbotMessage.ts                     # Obtém mensagens do WhatsApp bot.
+│   ├── SendMessageSystemProxy.ts             # Envia mensagens via proxy do sistema.
+│   ├── SendRefreshToken.ts                   # Envia requisições para renovação de token.
+│   ├── SerializeWbotMsgId.ts                 # Serializa o ID de mensagem do WhatsApp bot.
+│   ├── SetTicketMessagesAsRead.ts            # Marca mensagens de tickets como lidas.
+│   ├── socketEmit.ts                         # Emissão de eventos via socket.
+│   ├── SyncLatestTicketWbotMessage.ts        # Sincroniza a última mensagem de ticket do WhatsApp bot.
+│   └── UpdateDeletedUserOpenTicketsStatus.ts # Atualiza o status de tickets abertos de usuários deletados.
+
+├── app/                                     # Configuração da aplicação
+│   ├── awaitPostgresConnection.ts           # Conexão com o banco Postgres.
+│   ├── boot.ts                              # Inicializa a aplicação.
+│   ├── bull.ts                              # Integração com Bull para gerenciamento de filas.
+│   ├── config-env.ts                        # Configuração de variáveis de ambiente.
+│   ├── database.ts                          # Inicialização do banco de dados.
+│   ├── express.ts                           # Configuração do framework Express.
+│   ├── index.ts                             # Ponto de entrada da aplicação.
+│   └── modules.ts                           # Módulos da aplicação e suas configurações.
+
+├── @types/                                  # Tipos TypeScript
+│   ├── asterisk-manager.d.ts                # Tipos para gerenciamento de Asterisk.
+│   ├── express.d.ts                         # Tipos para Express.
+│   ├── global.d.ts                          # Tipos globais utilizados.
+│   ├── pupa.d.ts                            # Tipos para Pupa.
+│   ├── qrcode-terminal.d.ts                 # Tipos para QR code em terminal.
+│   ├── socket.d.ts                          # Tipos para socket.
+│   ├── waba360.d.ts                         # Tipos para WABA 360.
+
+├── libs/                                    # Bibliotecas externas ou utilitárias
+│   ├── AMI.ts                               # Recursos para Asterisk Manager Interface.
+│   ├── decodeTokenSocket.ts                 # Decodificação de tokens via socket.
+│   ├── InstaBot.ts                          # Funcionalidades do bot do Instagram.
+│   ├── messengerBot.ts                      # Funcionalidades do bot de mensagens.
+│   ├── minimalArgs.ts                       # Funções para argumentos mínimos.
+│   ├── Queue.ts                             # Gerenciamento de filas.
+│   ├── QueueListeners.ts                    # Escuta eventos em filas.
+│   ├── rabbitmq-server.ts                   # Integração com RabbitMQ.
+│   ├── redisClient.ts                       # Cliente Redis para manipulação de cache e dados.
+│   ├── socket.ts                            # Configuração de comunicação socket.
+│   ├── tbot.ts                              # Funcionalidades do Telegram Bot.
+│   ├── wbot.ts                              # Funcionalidades do WhatsApp Bot.
+│   └── socketChat/                          # Biblioteca específica para chat via socket.
+│   ├── Chat.ts                              # Funcionalidades de chat.
+│   ├── Index.ts                             # Ponto de entrada para a biblioteca de chat.
+│   ├── Utils.ts                             # Utilidades para o chat.
+
+├── controllers/                             # Controladores que gerenciam a lógica de requisições
+│   ├── AdminController.ts                   # Controller para funcionalidades administrativas.
+│   ├── APIConfigController.ts               # Controller para configurar a API.
+│   ├── APIExternalController.ts             # Controller para integração com APIs externas.
+│   ├── AutoReplyController.ts               # Manipula requisições e lógicas de auto resposta.
+│   ├── CampaignContactsController.ts        # Controlador para contatos de campanhas.
+│   ├── CampaignController.ts                # Controlador para gerenciar campanhas.
+│   ├── ChatFlowController.ts                # Controlador para fluxos de chat.
+│   ├── ContactController.ts                 # Controlador para manipulação de contatos.
+│   ├── facebookController.ts                # Controlador para integrações com Facebook.
+│   ├── FastReplyController.ts               # Controlador para respostas rápidas.
+│   ├── ImportPhoneContactsController.ts     # Importa contatos de telefones.
+│   ├── MessageController.ts                 # Controlador de mensagens trocadas.
+│   ├── QueueController.ts                   # Controlador para manipulação de filas.
+│   ├── SessionController.ts                 # Controlador para gerenciar sessões.
+│   ├── SettingController.ts                 # Controlador para gerenciar configurações.
+│   ├── StatisticsController.ts              # Controlador para estatísticas do sistema.
+│   ├── StepsReplyActionController.ts        # Controlador para ações de resposta.
+│   ├── StepsReplyController.ts              # Controlador para gerenciar as etapas de resposta.
+│   ├── TagController.ts                     # Controlador para gerenciar tags.
+│   ├── TenantController.ts                  # Controlador para gerenciar tenants.
+│   ├── TicketController.ts                  # Controlador para gerenciamento de tickets.
+│   ├── UserController.ts                    # Controlador para gerenciamento de usuários.
+│   ├── WebHooksController.ts                # Controlador para gerenciar WebHooks.
+│   ├── WhatsAppController.ts                # Controlador para funcionalidades do WhatsApp.
+│   └── WhatsAppSessionController.ts         # Controlador para gerenciar sessões do WhatsApp.
+
+├── routes/                                  # Definições de rotas da API
+│   ├── adminRoutes.ts                       # Rotas administrativas.
+│   ├── apiConfigRoutes.ts                   # Rotas para configuração de API.
+│   ├── apiExternalRoutes.ts                 # Rotas para APIs externas.
+│   ├── authRoutes.ts                        # Rotas de autenticação.
+│   ├── autoReplyRoutes.ts                   # Rotas para respostas automáticas.
+│   ├── campaignContactsRoutes.ts            # Rotas para contatos de campanhas.
+│   ├── campaignRoutes.ts                    # Rotas para campanhas.
+│   ├── chatFlowRoutes.ts                    # Rotas para fluxos de chat.
+│   ├── configuracaoRoutes.ts                # Rotas para configurações.
+│   ├── contactRoutes.ts                     # Rotas para gerenciamento de contatos.
+│   ├── facebookRoutes.ts                    # Rotas para integração com o Facebook.
+│   ├── fastReplyRoutes.ts                   # Rotas para respostas rápidas.
+│   ├── index.ts                             # Arquivo principal de rotas.
+│   ├── messageRoutes.ts                     # Rotas para gerenciamento de mensagens.
+│   ├── queueRoutes.ts                       # Rotas para filas.
+│   ├── settingRoutes.ts                     # Rotas para configurações.
+│   ├── statisticsRoutes.ts                  # Rotas para estatísticas.
+│   ├── tagRoutes.ts                         # Rotas para tags.
+│   ├── tenantRoutes.ts                      # Rotas para gerenciamento de tenants.
+│   ├── ticketRoutes.ts                      # Rotas para gerenciamento de tickets.
+│   ├── userRoutes.ts                        # Rotas para gerenciamento de usuários.
+│   ├── WebHooksRoutes.ts                    # Rotas para WebHooks.
+│   ├── whatsappRoutes.ts                    # Rotas para WhatsApp.
+│   └── whatsappSessionRoutes.ts             # Rotas para sessões do WhatsApp.
+├── server.ts                                # Arquivo principal do servidor.
+└── package.json                             # Configurações do projeto e dependências.
+
+
+frontend/
+src/
+├── layouts/                                 # Layouts gerais da aplicação, define a estrutura visual comum para várias páginas.
+├── router/                                  # Configuração de rotas da aplicação, responsável por definir como as 
+│   └── routes.js                            # Configuração de rotas da aplicação, define como navegação e URLs são gerenciadas.
+│   └── index.js                             # Ponto de entrada para o sistema de rotas.
+├── service/                                 # Serviços para chamadas de API ou lógica de negócio.
+│   └── api.js                               # Integração com a API principal.
+│   └── autoResposta.js                      # Serviço para gerenciar respostas automáticas.
+│   └── campanhas.js                         # Serviço para gerenciamento de campanhas.
+│   └── channels.js                          # Gerenciamento de canais de comunicação.
+│   └── chatFlow.js                          # Serviços para gerenciar fluxos de chat.
+│   └── configuracoes.js                     # Configurações gerais da aplicação.
+│   └── contatos.js                          # Gerenciamento de contatos.
+│   └── empresas.js                          # Serviços relacionados a empresas.
+│   └── erros.js                             # Gerenciamento de erros da aplicação.
+│   └── estatisticas.js                      # Serviços para estatísticas e análises.
+│   └── etiquetas.js                         # Gerenciamento de etiquetas.
+│   └── facebook.js                          # Integração com serviços do Facebook.
+│   └── filas.js                             # Gerenciamento de filas de atendimento.
+│   └── login.js                             # Serviço para autenticação de usuários.
+│   └── mensagensRapidas.js                  # Gerenciamento de mensagens rápidas.
+│   └── request.js                           # Gerenciamento de requisições gerais.
+│   └── sessoesWhatsapp.js                   # Gerenciamento de sessões do WhatsApp.
+│   └── tickets.js                           # Serviços para tickets de suporte.
+│   └── user.js                              # Gerenciamento de usuários.
+
+├── assets/                                  # Recursos estáticos, como imagens, fontes, etc.
+├── pages/                                   # Páginas da aplicação, contém componentes específicos para diferentes seções.
+│   ├── filas/                               # Página para gerenciamento de filas.
+│   ├── dashboard/                           # Página do painel de controle.
+│   ├── horarioAtendimento/                  # Página para configuração de horários de atendimento.
+│   ├── mensagensRapidas/                    # Página para gerenciamento de mensagens rápidas.
+│   ├── fluxoAutoResposta/                   # Página para gerenciamento de fluxos de auto-resposta.
+│   ├── configuracoes/                       # Página de configurações.
+│   │   └── Index.vue                        # Componente principal das configurações.
+│   ├── sessaosuper/                         # Página para gerenciamento de sessões de super usuários.
+│   ├── relatorios/                          # Página para relatórios.
+│   ├── sessaoWhatsapp/                      # Página para gerenciamento de sessões do WhatsApp.
+│   ├── empresassuper/                       # Página para gerenciamento de empresas.
+│   ├── etiquetas/                           # Página para gerenciamento de etiquetas.
+│   ├── atendimento/                         # Página para atendimento ao cliente.
+│   ├── api/                                 # Páginas relacionadas à API, possivelmente documentação.
+│   ├── campanhas/                           # Página para gerenciamento de campanhas.
+│   ├── usuariossuper/                       # Página para gerenciamento de usuários super.
+│   ├── contatos/                            # Página para gerenciamento de contatos.
+│   ├── usuarios/                            # Página para gerenciamento de usuários.
+│   └── chatFlow/                            # Página para gerenciamento de chat flows.
+
+├── store/                                   # Gerenciamento de estado (ex: Vuex, Redux).
+│   └── index.js                             # Ponto de entrada para o gerenciamento de estado.
+│   └── getters.js                           # Funções para obter dados do estado.
+│   └── modules/                             # Módulos do store, com subdivisões para diferentes partes da aplicação.
+│   │   └── atendimentoTicket.js             # Módulo para gerenciamento de tickets de atendimento.
+│   │   └── chatFlow.js                      # Módulo para gerenciamento de fluxos de chat.
+│   │   └── contatos.js                      # Módulo para gerenciamento de contatos.
+│   │   └── Notifications.js                 # Módulo para gerenciar notificações.
+│   │   └── user.js                          # Módulo para gerenciamento de usuários.
+│   │   └── usersApp.js                      # Módulo para gerenciamento de aplicativos de usuários.
+│   │   └── whatsapp.js                      # Módulo para gerenciamento de dados do WhatsApp.
+
+├── utils/                                   # Funções utilitárias que podem ser reutilizadas em diferentes partes da aplicação.
+│   ├── checkTicketFilter.js                 # Função para verificar filtros aplicados a tickets.
+│   ├── constants.js                         # Definições de constantes usadas na aplicação.
+│   ├── errors.js                            # Gerenciamento de erros comuns.
+│   ├── helpersNotifications.js              # Funções auxiliares relacionadas a notificações.
+│   ├── loading.js                           # Funções para gerenciar estados de carregamento.
+│   ├── socket.js                            # Funcionalidades de gerenciamento de e/ou comunicação via socket.
+│   └── verifySocketTicketAction.js          # Validação de ações em tickets via socket.
+
+├── boot/                                    # Inicialização da aplicação e configuração do ambiente.
+│   └── .gitkeep                             # Arquivo de controle do Git para manter o diretório.
+│   └── apex.js                              # Inicialização ou configuração do Apex.
+│   └── ccComponents.js                      # Configuração de componentes específicos.
+│   └── vuelidate.js                         # Configuração para validações no Vue.js.
+
+├── css/                                     # Arquivos de estilo CSS.
+│   └── app.sass                             # Estilos principais da aplicação em SASS.
+│   └── quasar.variables.sass                # Variáveis utilizadas no Quasar.
+
+├── components/                              # Componentes reutilizáveis da aplicação.
+│   └── cDateTimePick.vue                    # Componente para seleção de data e hora.
+│   └── cInput.vue                           # Componente para entrada de dados.
+│   └── cMolduraCelular.vue                  # Componente para exibir molduras de celular.
+│   └── cMultipleCards.vue                   # Componente para múltiplos cartões.
+│   └── cStatusUsuario.vue                   # Componente para exibir status de usuários.
+│   └── cSystemVersion.vue                   # Componente para exibir versão do sistema.
+│   └── EssentialLink.vue                    # Componente para links essenciais.
+│   └── ItemContatoAtendimento.vue           # Componente para itens de contato em atendimento.
+│   └── ItemStatusWhatsapp.vue               # Componente para status do WhatsApp.
+│   └── ReadMore.vue                         # Componente para expandir textos.
+│   └── StatusWhatsapp.vue                   # Componente para exibir status do WhatsApp.
+│   └── ccFlowBuilder/                       # Componentes específicos para o construtor de fluxos.
+│   │   └── defaultFlow.js                   # Definições do fluxo padrão.
+│   │   └── force-directed.js                # Lógica para layout de grafos dirigidos.
+│   │   └── help.vue                         # Componente de ajuda.
+│   │   └── index (CSS file)                 # Arquivo de estilo para o construtor de fluxos.
+│   │   └── info.vue                         # Componente informativo.
+│   │   └── jsplumb.js                       # Integração com jsPlumb para conectividade visual.
+│   │   └── mediaField.vue                   # Componente para gerenciar campos de mídia.
+│   │   └── messageField.vue                 # Componente para gerenciar campos de mensagem.
+│   │   └── messageOptionsField.vue          # Componente para opções de mensagens.
+│   │   └── mixins.js                        # Mixin para reutilização de funcionalidades.
+│   │   └── node.vue                         # Componente para nós.
+│   │   └── node_form.vue                    # Componente para formulários de nós.
+│   │   └── node_menu.vue                    # Componente para menu de nós.
+│   │   └── panel.vue                        # Componente de painel.
+│   │   └── utils.js                         # Utilitários para componentes.

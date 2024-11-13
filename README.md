@@ -1,12 +1,14 @@
-[![Grupo do WhatsApp](https://img.shields.io/badge/Grupo_Whatsapp-FlowDeskPro-blue)](https://chat.whatsapp.com/Ge1rB20Cp6JA5QbIX4ZulJ)
+## Mudanças feitas
+- Adicionado anexo em messagens rapidas ✅
+- Fechamento Automático de Tickets x dias sem interações ✅
 
-# FlowDeskPro com Painel SaaS
+# FlowDevcom Painel SaaS
 
 Um sistema para gestão de atendimento multicanais centralizado.
 
-Usuário Painel SaaS: super@flowdeskpro.io senha: 123456
+Usuário Painel SaaS: super@izing.io senha: 123456
 
-Usuário normal: admin@flowdeskpro.io senha: 123456
+Usuário normal: admin@izing.io senha: 123456
 
 **IMPORTANTE**: não garantimos que a utilização desta ferramenta não irá gerar bloqueio nas contas utilizadas. São bots que em sua maioria utilizam APIs secundarias para comunicação com os fornecedores dos serviços. Use com responsabilidade!
 

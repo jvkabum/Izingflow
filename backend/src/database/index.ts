@@ -29,6 +29,7 @@ import * as QueueJobs from "../libs/Queue";
 import { logger } from "../utils/logger";
 
 interface CustomSequelize extends Sequelize {
+  QueryTypes: any;
   afterConnect?: any;
   afterDisconnect?: any;
 }
