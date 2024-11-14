@@ -1,31 +1,30 @@
-import { QueryTypes } from 'sequelize'; // Importando QueryTypes
-import db from "../../database"; // Importe sua conexão com o banco de dados
-
-// Definir interface para o resultado
-interface ConfigResult {
-  value: string;
-}
+import { QueryTypes } from 'sequelize';
+import db from "../../database";
 
 export const getDaysToClose = async (): Promise<number> => {
   try {
-    // Realizando a consulta, agora com parâmetros substituídos corretamente
     const result = await db.query<{ value: string }>('SELECT value FROM public."Settings" WHERE key = ?', {
       replacements: ['daysToClose'],
-      type: QueryTypes.SELECT, // Usando QueryTypes corretamente importado
+      type: QueryTypes.SELECT
     });
 
-    // Verificar se o resultado está correto
     if (result && result.length > 0) {
       const value = parseInt(result[0].value, 10);
-      return !isNaN(value) && value > 0 ? value : 0; // Retorna o valor se for maior que 0, senão 0
-    } else {
-      // Caso o resultado não seja encontrado, retorna 0
-      return 0;
+      
+      // Adicione validações adicionais
+      if (!isNaN(value) && value > 0) {
+        return value;
+      }
+      
+      console.warn('Valor de daysToClose inválido, usando padrão 7 dias');
+      return 7; // Valor padrão se a configuração for inválida
     }
+
+    console.warn('Configuração daysToClose não encontrada, usando padrão 7 dias');
+    return 7; // Valor padrão se nenhuma configuração for encontrada
   } catch (error) {
-    // Tratar erro de consulta
     console.error('Erro ao recuperar a configuração daysToClose:', error);
-    return 0; // Caso haja erro, retorna 0 como fallback
+    return 7; // Fallback para 7 dias em caso de erro
   }
 };
 
