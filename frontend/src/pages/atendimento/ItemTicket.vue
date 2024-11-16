@@ -12,7 +12,8 @@
       :class="{
         'ticketBorderGrey': !$q.dark.isActive,
         'ticket-active-item': ticket.id === $store.getters['ticketFocado'].id,
-        'ticketNotAnswered': ticket.answered == false && ticket.isGroup == false && ticket.status == 'open'
+        'ticketNotAnswered': ticket.answered == false && ticket.isGroup == false && ticket.status == 'open',
+        'ticket-unread': ticket.unreadMessages > 0
       }">
       <q-item-section avatar
         class="q-px-none">
@@ -438,4 +439,19 @@ img:after
 
 .ticketBorderGrey
   border-left: 5px solid $grey-4
+
+.ticket-unread
+  animation: pulse-red 1.5s infinite
+  background-color: rgba(255, 0, 0, 0.1)
+
+@keyframes pulse-red
+  0%
+    background-color: rgba(255, 0, 0, 0.1)
+    transform: scale(1)
+  50%
+    background-color: rgba(255, 0, 0, 0.3)
+    transform: scale(1.02)
+  100%
+    background-color: rgba(255, 0, 0, 0.1)
+    transform: scale(1)
 </style>
