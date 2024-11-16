@@ -2,6 +2,7 @@
 ## Mudanças feitas
 - Adicionado anexo em messagens rapidas ✅
 - Fechamento Automático de Tickets x dias sem interações ✅
+- Melhoria na interação visual para destacar tickets com novas mensagens ✅
 
 # FlowDevcom Painel SaaS
 

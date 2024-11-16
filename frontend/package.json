@@ -1,12 +1,12 @@
 {
-  "name": "FlowDeskPro",
-  "version": "2.6.0",
+  "name": "izingFlow",
+  "version": "2.7.0",
   "description": "Bot Multiatendimento, multicanais e multiempresas.",
-  "productName": "FlowDeskPro",
-  "author": "FlowDeskPro <FlowDeskPro@FlowDeskPro.io>",
+  "productName": "izingFlow",
+  "author": "Durans/FlowDeskPro/TiOKaBuM",
   "private": false,
   "license": "AGPL-3.0-or-later",
-  "github": "https://github.com/flowdeskpro/flowdeskpro.git",
+  "github": "https://github.com/jvkabum/Izingflow",
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0"

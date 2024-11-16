@@ -1,18 +1,18 @@
 {
-  "name": "FlowDeskPro",
-  "version": "2.6.0",
-  "description": "FlowDeskPro - Sistema de atendimentos multicanal",
+  "name": "izingFlow",
+  "version": "2.7.0",
+  "description": "Bot Multiatendimento, multicanais e multiempresas.",",
   "main": "index.js",
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/flowdeskpro/flowdeskpro.git"
+    "url": "https://github.com/jvkabum/Izingflow.git"
   },
   "scripts": {
     "release": "semantic-release --no-ci",
     "husk": "husky install"
   },
-  "author": "FlowDeskPro (FlowDeskPro@FlowDeskPro.com)",
+  "author": "Durans/FlowDeskPro/TiOKaBuM",
   "license": "AGPL-3.0-or-later",
   "dependencies": {},
   "devDependencies": {

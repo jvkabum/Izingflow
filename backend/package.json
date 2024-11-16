@@ -1,7 +1,7 @@
 {
   "name": "backend",
-  "version": "2.6.0",
-  "description": "FlowDeskPro - Sistema de atendimentos multicanal",
+  "version": "2.7.0",
+  "description": "Bot Multiatendimento, multicanais e multiempresas.",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
@@ -17,8 +17,8 @@
   "engines": {
     "node": ">=20"
   },
-  "author": " (FlowDeskPro@FlowDeskPro.io)",
-  "private": true,
+  "author": "Durans/FlowDeskPro/TiOKaBuM",
+  "private": false,
   "license": "AGPL-3.0-or-later",
   "dependencies": {
     "@androz2091/insta.js": "^1.6.1",
