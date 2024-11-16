@@ -1,4 +1,4 @@
-[![Grupo do WhatsApp](https://img.shields.io/badge/Grupo_Whatsapp-FlowDeskPro-blue)](https://chat.whatsapp.com/GHNJVQRoLzrGuO1lmCr7vR)
+[![Grupo do WhatsApp](https://img.shields.io/badge/Grupo_Whatsapp-IzingFlow-blue)](https://chat.whatsapp.com/GHNJVQRoLzrGuO1lmCr7vR)
 ## Mudanças feitas
 - Adicionado anexo em messagens rapidas ✅
 - Fechamento Automático de Tickets x dias sem interações ✅
