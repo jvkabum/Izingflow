@@ -34,9 +34,8 @@ const FindOrCreateTicketService = async ({
   isSync,
   channel
 }: Data): Promise<Ticket | any> => {
-  // Se a mensagem for enviada por você, não cria ticket
+  // se for uma mensagem de campanha, não abrir tícket
   if (msg && msg.fromMe) {
-    // Verifica se é mensagem de campanha
     const msgCampaign = await CampaignContacts.findOne({
       where: {
         contactId: contact.id,
@@ -46,8 +45,9 @@ const FindOrCreateTicketService = async ({
     if (msgCampaign?.id) {
       return { isCampaignMessage: true };
     }
+  }
 
-    // Verifica mensagem de despedida
+  if (msg && msg.fromMe) {
     const farewellMessage = await MessageModel.findOne({
       where: { messageId: msg.id?.id || msg.message_id || msg.item_id },
       include: ["ticket"]
@@ -61,12 +61,8 @@ const FindOrCreateTicketService = async ({
       ticket.isFarewellMessage = true;
       return ticket;
     }
-
-    // Para mensagens enviadas por você, retorna null
-    return null;
   }
 
-  // Busca ticket existente
   let ticket = await Ticket.findOne({
     where: {
       status: {
@@ -101,26 +97,21 @@ const FindOrCreateTicketService = async ({
     ]
   });
 
-  // Se encontrou ticket existente
   if (ticket) {
     unreadMessages =
       ["telegram", "waba", "instagram", "messenger"].includes(channel) &&
       unreadMessages > 0
         ? (unreadMessages += ticket.unreadMessages)
         : unreadMessages;
-    
     await ticket.update({ unreadMessages });
-    
     socketEmit({
       tenantId,
       type: "ticket:update",
       payload: ticket
     });
-    
     return ticket;
   }
 
-  // Lógica para grupo
   if (groupContact) {
     ticket = await Ticket.findOne({
       where: {
@@ -170,9 +161,11 @@ const FindOrCreateTicketService = async ({
       return ticket;
     }
   } else {
-    // Busca ticket para contato individual
     ticket = await Ticket.findOne({
       where: {
+        // updatedAt: {
+        //   [Op.between]: [+subHours(new Date(), 24), +new Date()]
+        // },
         status: {
           [Op.in]: ["open", "pending"]
         },
@@ -223,7 +216,6 @@ const FindOrCreateTicketService = async ({
     }
   }
 
-  // Configuração de tickets diretos para carteiras
   const DirectTicketsToWallets =
     (await ListSettingsService(tenantId))?.find(
       s => s.key === "DirectTicketsToWallets"
@@ -239,7 +231,6 @@ const FindOrCreateTicketService = async ({
     channel
   };
 
-  // Configuração de carteira para atribuição automática
   if (DirectTicketsToWallets && contact.id) {
     const wallet: any = contact;
     const wallets = await wallet.getWallets();
@@ -250,26 +241,20 @@ const FindOrCreateTicketService = async ({
     }
   }
 
-  // Cria novo ticket
   const ticketCreated = await Ticket.create(ticketObj);
 
-  // Cria log do ticket
   await CreateLogTicketService({
     ticketId: ticketCreated.id,
     type: "create"
   });
 
-  // Verifica fluxo de boas-vindas do chatbot
-  // Só dispara para mensagens recebidas ou sem usuário atribuído
   if ((msg && !msg.fromMe) || !ticketCreated.userId || isSync) {
     await CheckChatBotFlowWelcome(ticketCreated);
   }
 
-  // Busca ticket criado
   ticket = await ShowTicketService({ id: ticketCreated.id, tenantId });
   ticket.setDataValue("isCreated", true);
 
-  // Emite evento de atualização
   socketEmit({
     tenantId,
     type: "ticket:update",
