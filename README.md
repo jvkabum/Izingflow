@@ -30,8 +30,7 @@ Usuário normal: admin@izing.io senha: 123456
 
 ## Instalando
 Seguem links sugerimos:
--  [Instalador automatico FlowDeskPro LOCALHOST](EM-BREVE)
--  [Instalador automatico FlowDeskPro](https://github.com/flowdeskpro/instalador-flowdeskpro.git)
+https://docs.google.com/document/d/14XF2Q6jLmooanMzuAxHQUqcP2C9CY5EBysuBhhLy80U/edit?usp=sharing
 <br/>
 
 **IMPORTANTE**: verifique sempre o .env.example e ajuste o seu .env antes de atualizar, uma vez que algumas novas variáveis podem ser adicionadas.

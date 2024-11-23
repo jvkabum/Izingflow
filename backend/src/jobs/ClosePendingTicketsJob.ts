@@ -48,7 +48,7 @@ const closePendingTickets = async () => {
 // Configura a tarefa agendada para executar diariamente à meia-noite
 const scheduleClosePendingTicketsJob = () => {
     // Executa a cada minuto para testes, ajuste conforme necessário
-    cron.schedule('* * * * *', closePendingTickets);
+    cron.schedule('0 0 * * *', closePendingTickets);
 };
 
 export default scheduleClosePendingTicketsJob;
