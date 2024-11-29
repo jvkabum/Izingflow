@@ -27,3 +27,4 @@ newrelic_agent.log
 backend/package-lock.json
 frontend/package-lock.json
 *.rar
+/backend/.wwebjs_cache
