@@ -1,7 +1,7 @@
 {
-  "name": "izingFlow",
+  "name": "izing-flow",
   "version": "2.7.0",
-  "description": "Bot Multiatendimento, multicanais e multiempresas.",",
+  "description": "Bot Multiatendimento, multicanais e multiempresas.",
   "main": "index.js",
   "private": false,
   "repository": {
