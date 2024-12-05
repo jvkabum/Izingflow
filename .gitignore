@@ -28,3 +28,4 @@ backend/package-lock.json
 frontend/package-lock.json
 *.rar
 /backend/.wwebjs_cache
+documentaçao-detalhadas.md
