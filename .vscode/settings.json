@@ -2,5 +2,36 @@
   "compile-hero.disable-compile-files-on-did-save-code": false,
   "workbench.colorTheme": "Default Dark+",
   "html.format.contentUnformatted": "",
-  "workbench.preferredDarkColorTheme": "Palenight Theme"
+  "cSpell.language": "en,pt,pt_BR",
+  "cSpell.enabledFileTypes": [
+    "vue",
+    "javascript",
+    "typescript",
+    "markdown",
+    "text"
+  ],
+  "cSpell.ignorePaths": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    ".git/**"
+  ],
+  "cSpell.allowCompoundWords": true,
+  "cSpell.customDictionaries": {
+    "project-words": {
+      "name": "project-words",
+      "path": "./project-words.txt",
+      "description": "Palavras específicas do projeto",
+      "addWords": true
+    }
+  },
+  "cSpell.dictionaries": [
+    "portuguese",
+    "softwareTerms",
+    "typescript",
+    "node",
+    "html",
+    "css",
+    "project-words"
+  ]
 }
