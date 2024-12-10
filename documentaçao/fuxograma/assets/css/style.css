@@ -1,0 +1,167 @@
+:root {
+    --primary-color: #4A90E2;
+    --primary-dark: #357ABD;
+    --primary-light: #E3F2FD;
+    --success-color: #27AE60;
+    --success-light: #E3F2FD;
+    --warning-color: #F39C12;
+    --error-color: #E74C3C;
+    --background-color: #E3F2FD;
+    --text-color: #2C3E50;
+    --border-color: #E3F2FD;
+}
+
+/* Estilos Base */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #E3F2FD;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 0;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    margin-left: calc(100vw - 100%);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+}
+
+/* Títulos e Subtítulos */
+.diagram-title {
+    color: var(--text-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--primary-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    background: #E3F2FD;
+}
+
+.diagram-description {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    opacity: 0.9;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    background: #E3F2FD;
+}
+
+/* Mermaid Container */
+.mermaid {
+    flex: 1 0 auto;
+    width: 100%;
+    height: auto;
+    min-height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 1rem 0;
+    background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    font-size: 16px;
+    position: relative;
+    z-index: 1;
+    margin-top: 20px;
+    max-height: calc(100vh - 250px);
+    overflow: hidden !important;
+}
+
+.mermaid svg {
+    width: 100% !important;
+    height: 100% !important;
+    position: relative;
+    cursor: grab;
+    transform-origin: center center;
+    transition: transform 0.1s ease;
+    margin: 0;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    viewBox: '0 0 1200 800';
+}
+
+.mermaid svg:active {
+    cursor: grabbing;
+}
+
+/* Zoom Controls */
+.zoom-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.zoom-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.zoom-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.1);
+}
+
+.zoom-btn:active {
+    transform: scale(0.95);
+}
+
+.zoom-btn i {
+    font-size: 20px;
+}

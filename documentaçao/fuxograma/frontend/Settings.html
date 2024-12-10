@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IzingFlow - Frontend: Configurações</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/menu-style.css">
+    <link rel="stylesheet" href="../assets/css/diagram-selector.css">
+    <script src="../assets/js/menus/frontend-menu.js"></script>
+    <script src="../assets/js/menu-manager.js"></script>
+    <script src="../assets/js/mermaid-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <script src="../assets/js/auto-direction.js"></script>
+    <script src="../assets/js/export-diagram.js"></script>
+    <script src="../assets/js/diagram-types.js"></script>
+    <script src="../assets/js/diagram-selector.js"></script>
+    <script src="../assets/js/diagram-direction.js"></script>
+    <script src="../assets/js/zoom-control.js"></script>
+    <script src="../assets/js/init.js"></script>
+</head>
+<body>
+    <div class="diagram-title">Frontend: Configurações</div>
+    <div class="diagram-description">
+        Este diagrama demonstra as configurações disponíveis no frontend.
+    </div>
+
+    <div class="mermaid">
+        graph LR
+            %% Definição de Estilos
+            classDef ui fill:#4A90E2,stroke:#357ABD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef config fill:#27AE60,stroke:#219A52,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef storage fill:#F39C12,stroke:#E67E22,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef action fill:#9B59B6,stroke:#8E44AD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+
+            %% Interface
+            Settings["⚙️ Configurações"]
+            General["🔧 Geral"]
+            Appearance["🎨 Aparência"]
+            Notifications["🔔 Notificações"]
+            
+            %% Configurações
+            Language["🌐 Idioma"]
+            Theme["🎭 Tema"]
+            Timezone["🕒 Fuso Horário"]
+            Sound["🔊 Som"]
+            
+            %% Armazenamento
+            LocalStorage["💾 Local Storage"]
+            Cache["⚡ Cache"]
+            Cookies["🍪 Cookies"]
+            
+            %% Ações
+            Save["💾 Salvar"]
+            Reset["🔄 Resetar"]
+            Import["📥 Importar"]
+            Export["📤 Exportar"]
+            
+            %% Fluxo
+            Settings --> General
+            Settings --> Appearance
+            Settings --> Notifications
+            
+            General --> Language
+            General --> Timezone
+            
+            Appearance --> Theme
+            Notifications --> Sound
+            
+            Language --> LocalStorage
+            Theme --> LocalStorage
+            Sound --> LocalStorage
+            
+            LocalStorage --> Save
+            LocalStorage --> Reset
+            
+            %% Aplicar Estilos
+            class Settings,General,Appearance,Notifications ui
+            class Language,Theme,Timezone,Sound config
+            class LocalStorage,Cache,Cookies storage
+            class Save,Reset,Import,Export action
+    </div>
+</body>
+</html> 

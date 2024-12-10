@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IzingFlow - Backend: Tickets</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/menu-style.css">
+    <link rel="stylesheet" href="../assets/css/diagram-selector.css">
+    <script src="../assets/js/menus/backend-menu.js"></script>
+    <script src="../assets/js/menu-manager.js"></script>
+    <script src="../assets/js/mermaid-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <script src="../assets/js/auto-direction.js"></script>
+    <script src="../assets/js/export-diagram.js"></script>
+    <script src="../assets/js/diagram-types.js"></script>
+    <script src="../assets/js/diagram-selector.js"></script>
+    <script src="../assets/js/diagram-direction.js"></script>
+    <script src="../assets/js/zoom-control.js"></script>
+    <script src="../assets/js/init.js"></script>
+</head>
+<body>
+    <div class="diagram-title">Backend: Tickets</div>
+    <div class="diagram-description">
+        Este diagrama demonstra o sistema de gerenciamento de tickets.
+    </div>
+
+    <div class="mermaid">
+        graph LR
+            %% Definição de Estilos
+            classDef ticket fill:#4A90E2,stroke:#357ABD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef atendimento fill:#27AE60,stroke:#219A52,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef automacao fill:#F39C12,stroke:#E67E22,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef integracao fill:#9B59B6,stroke:#8E44AD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+
+            %% Tickets
+            CriarTicket["➕ Criar Ticket"]
+            AtualizarTicket["✏️ Atualizar Ticket"]
+            FecharTicket["✅ Fechar Ticket"]
+            ArquivarTicket["📁 Arquivar Ticket"]
+            
+            %% Atendimento
+            Fila["📋 Fila"]
+            Atendente["👤 Atendente"]
+            Prioridade["⚡ Prioridade"]
+            Status["🔄 Status"]
+            
+            %% Automação
+            Regras["⚙️ Regras"]
+            Gatilhos["🎯 Gatilhos"]
+            Acoes["⚡ Ações"]
+            Fluxos["🔄 Fluxos"]
+            
+            %% Integrações
+            WhatsApp["📱 WhatsApp"]
+            Email["📧 Email"]
+            Chat["💬 Chat"]
+            API["🔌 API"]
+            
+            %% Fluxo Principal
+            CriarTicket --> Fila
+            AtualizarTicket --> Atendente
+            FecharTicket --> Status
+            ArquivarTicket --> Prioridade
+            
+            %% Fluxo Atendimento
+            Fila --> Regras
+            Atendente --> Gatilhos
+            Prioridade --> Acoes
+            Status --> Fluxos
+            
+            %% Fluxo Automação
+            Regras --> WhatsApp
+            Gatilhos --> Email
+            Acoes --> Chat
+            Fluxos --> API
+            
+            %% Conexões Cruzadas
+            CriarTicket --> WhatsApp
+            AtualizarTicket --> Email
+            FecharTicket --> Chat
+            ArquivarTicket --> API
+            
+            %% Aplicar Estilos
+            class CriarTicket,AtualizarTicket,FecharTicket,ArquivarTicket ticket
+            class Fila,Atendente,Prioridade,Status atendimento
+            class Regras,Gatilhos,Acoes,Fluxos automacao
+            class WhatsApp,Email,Chat,API integracao
+    </div>
+</body>
+</html> 

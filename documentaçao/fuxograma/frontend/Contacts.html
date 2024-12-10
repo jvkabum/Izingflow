@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IzingFlow - Frontend: Contatos</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/menu-style.css">
+    <link rel="stylesheet" href="../assets/css/diagram-selector.css">
+    <script src="../assets/js/menus/frontend-menu.js"></script>
+    <script src="../assets/js/menu-manager.js"></script>
+    <script src="../assets/js/mermaid-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <script src="../assets/js/auto-direction.js"></script>
+    <script src="../assets/js/export-diagram.js"></script>
+    <script src="../assets/js/diagram-types.js"></script>
+    <script src="../assets/js/diagram-selector.js"></script>
+    <script src="../assets/js/diagram-direction.js"></script>
+    <script src="../assets/js/zoom-control.js"></script>
+    <script src="../assets/js/init.js"></script>
+</head>
+<body>
+    <div class="diagram-title">Frontend: Contatos</div>
+    <div class="diagram-description">
+        Este diagrama demonstra a gestão de contatos no frontend.
+    </div>
+
+    <div class="mermaid">
+        graph LR
+            %% Definição de Estilos
+            classDef ui fill:#4A90E2,stroke:#357ABD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef data fill:#27AE60,stroke:#219A52,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef action fill:#F39C12,stroke:#E67E22,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef filter fill:#9B59B6,stroke:#8E44AD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+
+            %% Componentes UI
+            ContactList["👥 Lista de Contatos"]
+            ContactForm["📝 Formulário"]
+            ContactDetails["📋 Detalhes"]
+            ImportExport["📤 Import/Export"]
+            
+            %% Dados
+            ContactDB["💾 Banco de Contatos"]
+            Tags["🏷️ Tags"]
+            Groups["👥 Grupos"]
+            History["📅 Histórico"]
+            
+            %% Ações
+            Add["➕ Adicionar"]
+            Edit["✏️ Editar"]
+            Delete["❌ Deletar"]
+            Import["📥 Importar"]
+            
+            %% Filtros
+            SearchFilter["🔍 Busca"]
+            TagFilter["🏷️ Filtro Tags"]
+            GroupFilter["👥 Filtro Grupos"]
+            
+            %% Fluxo Principal
+            ContactList --> ContactDetails
+            ContactForm --> Add
+            ContactDetails --> Edit
+            ContactDetails --> Delete
+            
+            ImportExport --> Import
+            
+            ContactDB --> ContactList
+            Tags --> ContactDetails
+            Groups --> ContactDetails
+            History --> ContactDetails
+            
+            SearchFilter --> ContactList
+            TagFilter --> ContactList
+            GroupFilter --> ContactList
+            
+            %% Aplicar Estilos
+            class ContactList,ContactForm,ContactDetails,ImportExport ui
+            class ContactDB,Tags,Groups,History data
+            class Add,Edit,Delete,Import action
+            class SearchFilter,TagFilter,GroupFilter filter
+    </div>
+</body>
+</html> 

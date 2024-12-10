@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IzingFlow - Sistema: Arquitetura</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/menu-style.css">
+    <link rel="stylesheet" href="../assets/css/diagram-selector.css">
+    <script src="../assets/js/menus/sistema-menu.js"></script>
+    <script src="../assets/js/menu-manager.js"></script>
+    <script src="../assets/js/mermaid-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <script src="../assets/js/auto-direction.js"></script>
+    <script src="../assets/js/export-diagram.js"></script>
+    <script src="../assets/js/diagram-types.js"></script>
+    <script src="../assets/js/diagram-selector.js"></script>
+    <script src="../assets/js/diagram-direction.js"></script>
+    <script src="../assets/js/zoom-control.js"></script>
+    <script src="../assets/js/init.js"></script>
+</head>
+<body>
+    <div class="diagram-title">Sistema: Arquitetura</div>
+    <div class="diagram-description">
+        Este diagrama demonstra a arquitetura geral do sistema e suas integrações.
+    </div>
+
+    <div class="mermaid">
+        graph LR
+            %% Definição de Estilos
+            classDef frontend fill:#4A90E2,stroke:#357ABD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef backend fill:#27AE60,stroke:#219A52,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef database fill:#F39C12,stroke:#E67E22,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef servico fill:#9B59B6,stroke:#8E44AD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef externo fill:#E74C3C,stroke:#C0392B,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+
+            %% Frontend
+            Cliente["🌐 Cliente Web"]
+            Vue["⚡ Vue.js"]
+            Quasar["🎨 Quasar"]
+            Store["📦 Vuex Store"]
+            
+            %% Backend
+            API["🔌 API REST"]
+            Autenticacao["🔐 Autenticação"]
+            Socket["🔄 WebSocket"]
+            Filas["📋 Filas"]
+            
+            %% Serviços
+            WhatsApp["📱 WhatsApp API"]
+            Redis["⚡ Cache Redis"]
+            Bull["🐂 Fila Bull"]
+            
+            %% Banco de Dados
+            Postgres[("💾 PostgreSQL")]
+            Mongo[("🍃 MongoDB")]
+            
+            %% Fluxo Frontend
+            Cliente --> Vue
+            Vue --> Quasar
+            Vue --> Store
+            Store --> API
+            Store --> Socket
+            
+            %% Fluxo Backend
+            API --> Autenticacao
+            API --> Filas
+            Filas --> Bull
+            Bull --> WhatsApp
+            
+            %% Dados
+            API --> Postgres
+            API --> Mongo
+            Filas --> Redis
+            
+            %% WebSocket
+            Socket --> Cliente
+            
+            %% Aplicar Estilos
+            class Cliente,Vue,Quasar,Store frontend
+            class API,Autenticacao,Socket,Filas backend
+            class Postgres,Mongo,Redis database
+            class WhatsApp,Bull servico
+    </div>
+</body>
+</html> 

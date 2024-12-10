@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IzingFlow - Backend: Usuários</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/menu-style.css">
+    <link rel="stylesheet" href="../assets/css/diagram-selector.css">
+    <script src="../assets/js/menus/backend-menu.js"></script>
+    <script src="../assets/js/menu-manager.js"></script>
+    <script src="../assets/js/mermaid-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <script src="../assets/js/auto-direction.js"></script>
+    <script src="../assets/js/export-diagram.js"></script>
+    <script src="../assets/js/diagram-types.js"></script>
+    <script src="../assets/js/diagram-selector.js"></script>
+    <script src="../assets/js/diagram-direction.js"></script>
+    <script src="../assets/js/zoom-control.js"></script>
+    <script src="../assets/js/init.js"></script>
+</head>
+<body>
+    <div class="diagram-title">Backend: Usuários</div>
+    <div class="diagram-description">
+        Este diagrama demonstra o gerenciamento de usuários no sistema.
+    </div>
+
+    <div class="mermaid">
+        graph LR
+            %% Definição de Estilos
+            classDef gerenciamento fill:#4A90E2,stroke:#357ABD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef perfil fill:#27AE60,stroke:#219A52,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef configuracao fill:#F39C12,stroke:#E67E22,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef integracao fill:#9B59B6,stroke:#8E44AD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+
+            %% Gerenciamento
+            CriarUsuario["➕ Criar Usuário"]
+            EditarUsuario["✏️ Editar Usuário"]
+            ExcluirUsuario["❌ Excluir Usuário"]
+            ListarUsuarios["📋 Listar Usuários"]
+            
+            %% Perfil
+            DadosPessoais["👤 Dados Pessoais"]
+            Preferencias["⚙️ Preferências"]
+            Notificacoes["🔔 Notificações"]
+            Historico["📜 Histórico"]
+            
+            %% Configurações
+            Idioma["🌐 Idioma"]
+            Tema["🎨 Tema"]
+            Privacidade["🔒 Privacidade"]
+            Alertas["⚠️ Alertas"]
+            
+            %% Integrações
+            WhatsApp["📱 WhatsApp"]
+            Email["📧 Email"]
+            Calendario["📅 Calendário"]
+            Contatos["📞 Contatos"]
+            
+            %% Fluxo Principal
+            CriarUsuario --> DadosPessoais
+            EditarUsuario --> Preferencias
+            ListarUsuarios --> Historico
+            ExcluirUsuario --> Privacidade
+            
+            %% Fluxo Perfil
+            DadosPessoais --> Idioma
+            Preferencias --> Tema
+            Notificacoes --> Alertas
+            Historico --> Privacidade
+            
+            %% Fluxo Configurações
+            Idioma --> WhatsApp
+            Tema --> Email
+            Privacidade --> Calendario
+            Alertas --> Contatos
+            
+            %% Conexões Cruzadas
+            DadosPessoais --> WhatsApp
+            Notificacoes --> Email
+            Preferencias --> Calendario
+            Historico --> Contatos
+            
+            %% Aplicar Estilos
+            class CriarUsuario,EditarUsuario,ExcluirUsuario,ListarUsuarios gerenciamento
+            class DadosPessoais,Preferencias,Notificacoes,Historico perfil
+            class Idioma,Tema,Privacidade,Alertas configuracao
+            class WhatsApp,Email,Calendario,Contatos integracao
+    </div>
+</body>
+</html> 

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IzingFlow - Funcionalidades: Automação</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/menu-style.css">
+    <link rel="stylesheet" href="../assets/css/diagram-selector.css">
+    <script src="../assets/js/menus/features-menu.js"></script>
+    <script src="../assets/js/menu-manager.js"></script>
+    <script src="../assets/js/mermaid-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <script src="../assets/js/auto-direction.js"></script>
+    <script src="../assets/js/export-diagram.js"></script>
+    <script src="../assets/js/diagram-types.js"></script>
+    <script src="../assets/js/diagram-selector.js"></script>
+    <script src="../assets/js/diagram-direction.js"></script>
+    <script src="../assets/js/zoom-control.js"></script>
+    <script src="../assets/js/init.js"></script>
+</head>
+<body>
+    <div class="diagram-title">Funcionalidades: Automação</div>
+    <div class="diagram-description">
+        Este diagrama demonstra o sistema de automação de processos.
+    </div>
+
+    <div class="mermaid">
+        graph LR
+            %% Definição de Estilos
+            classDef trigger fill:#4A90E2,stroke:#357ABD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef action fill:#27AE60,stroke:#219A52,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef condition fill:#F39C12,stroke:#E67E22,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef result fill:#9B59B6,stroke:#8E44AD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+
+            %% Gatilhos
+            Message["💬 Nova Mensagem"]
+            Contact["👤 Novo Contato"]
+            Schedule["⏰ Agendamento"]
+            Event["📅 Evento"]
+            
+            %% Condições
+            Keywords["🔍 Palavras-chave"]
+            Time["⌚ Horário"]
+            Status["📊 Status"]
+            Tags["🏷️ Tags"]
+            
+            %% Ações
+            Reply["📨 Responder"]
+            Tag["🏷️ Etiquetar"]
+            Assign["👥 Atribuir"]
+            Notify["🔔 Notificar"]
+            
+            %% Resultados
+            Success["✅ Sucesso"]
+            Pending["⏳ Pendente"]
+            Failed["❌ Falha"]
+            Log["📝 Log"]
+            
+            %% Fluxo
+            Message --> Keywords
+            Contact --> Tags
+            Schedule --> Time
+            Event --> Status
+            
+            Keywords --> Reply
+            Time --> Notify
+            Status --> Assign
+            Tags --> Tag
+            
+            Reply --> Success
+            Notify --> Pending
+            Assign --> Failed
+            Tag --> Log
+            
+            %% Aplicar Estilos
+            class Message,Contact,Schedule,Event trigger
+            class Keywords,Time,Status,Tags condition
+            class Reply,Tag,Assign,Notify action
+            class Success,Pending,Failed,Log result
+    </div>
+</body>
+</html> 

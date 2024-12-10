@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IzingFlow - Backend: Campanhas</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/menu-style.css">
+    <link rel="stylesheet" href="../assets/css/diagram-selector.css">
+    <script src="../assets/js/menus/backend-menu.js"></script>
+    <script src="../assets/js/menu-manager.js"></script>
+    <script src="../assets/js/mermaid-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <script src="../assets/js/auto-direction.js"></script>
+    <script src="../assets/js/export-diagram.js"></script>
+    <script src="../assets/js/diagram-types.js"></script>
+    <script src="../assets/js/diagram-selector.js"></script>
+    <script src="../assets/js/diagram-direction.js"></script>
+    <script src="../assets/js/zoom-control.js"></script>
+    <script src="../assets/js/init.js"></script>
+</head>
+<body>
+    <div class="diagram-title">Backend: Sistema de Campanhas</div>
+    <div class="diagram-description">
+        Este diagrama demonstra o fluxo completo do sistema de campanhas, incluindo criação, agendamento, execução e monitoramento.
+    </div>
+
+    <div class="mermaid">
+        graph TB
+            %% Definição de Estilos
+            classDef ui fill:#4A90E2,stroke:#357ABD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef campaign fill:#27AE60,stroke:#219A52,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef queue fill:#9B59B6,stroke:#8E44AD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef storage fill:#F39C12,stroke:#E67E22,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef monitor fill:#E74C3C,stroke:#C0392B,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+
+            %% Interface Components
+            UI["🖥️ Interface"]
+            CampaignForm["📝 Form Campanha"]
+            ContactUpload["📥 Upload Contatos"]
+            TemplateEditor["✏️ Editor Templates"]
+            Scheduler["📅 Agendador"]
+            
+            %% Campaign Services
+            CampaignController["🎮 Controller"]
+            ValidationService["✅ Validação"]
+            CampaignService["📢 Campaign Service"]
+            ScheduleService["⏰ Schedule Service"]
+            TemplateService["📋 Template Service"]
+            ContactService["👥 Contact Service"]
+            
+            %% Queue System
+            MessageQueue["📨 Fila Mensagens"]
+            RetryQueue["🔄 Fila Retry"]
+            DelayQueue["⏳ Fila Delay"]
+            PriorityQueue["⭐ Fila Prioridade"]
+            
+            %% Processing
+            Processor["⚙️ Processador"]
+            RateLimit["⚡ Rate Limiter"]
+            MessageBuilder["📝 Message Builder"]
+            MediaProcessor["🖼️ Media Processor"]
+            
+            %% Storage
+            CampaignDB[("💾 Campaigns DB")]
+            ContactDB[("👥 Contacts DB")]
+            TemplateDB[("📋 Templates DB")]
+            MessageDB[("📨 Messages DB")]
+            MediaDB[("🖼️ Media DB")]
+            
+            %% Monitoring
+            Analytics["📊 Analytics"]
+            Logger["📝 Logger"]
+            Monitor["👀 Monitor"]
+            Alerts["🚨 Alertas"]
+            Reports["📈 Relatórios"]
+            
+            %% External Services
+            WhatsApp["📱 WhatsApp API"]
+            S3["📦 S3 Storage"]
+            CDN["🌐 CDN"]
+            SMTP["📧 Email Service"]
+
+            %% Fluxo de Criação
+            UI -->|"1. Criar Campanha"| CampaignForm
+            CampaignForm -->|"2. Dados"| CampaignController
+            ContactUpload -->|"3. Contatos"| ContactService
+            TemplateEditor -->|"4. Templates"| TemplateService
+            
+            %% Validação
+            CampaignController -->|"5. Valida"| ValidationService
+            ValidationService -->|"6. Regras"| CampaignService
+            
+            %% Agendamento
+            Scheduler -->|"7. Agenda"| ScheduleService
+            ScheduleService -->|"8. Programa"| CampaignService
+            
+            %% Processamento
+            CampaignService -->|"9. Inicia"| Processor
+            Processor -->|"10. Rate Limit"| RateLimit
+            RateLimit -->|"11. Constrói"| MessageBuilder
+            MessageBuilder -->|"12. Processa"| MediaProcessor
+            
+            %% Filas
+            Processor -->|"13. Enfileira"| MessageQueue
+            MessageQueue -->|"14. Retry"| RetryQueue
+            MessageQueue -->|"15. Delay"| DelayQueue
+            MessageQueue -->|"16. Prioridade"| PriorityQueue
+            
+            %% Storage
+            CampaignService -->|"17. Salva"| CampaignDB
+            ContactService -->|"18. Salva"| ContactDB
+            TemplateService -->|"19. Salva"| TemplateDB
+            MessageBuilder -->|"20. Salva"| MessageDB
+            MediaProcessor -->|"21. Salva"| MediaDB
+            
+            %% External
+            MediaProcessor -->|"22. Upload"| S3
+            S3 -->|"23. Distribui"| CDN
+            MessageQueue -->|"24. Envia"| WhatsApp
+            
+            %% Monitoramento
+            Monitor -->|"25. Coleta"| Analytics
+            Monitor -->|"26. Logs"| Logger
+            Monitor -->|"27. Alerta"| Alerts
+            Analytics -->|"28. Gera"| Reports
+            Alerts -->|"29. Notifica"| SMTP
+            
+            %% Status Updates
+            WhatsApp -->|"30. Status"| Monitor
+            Monitor -->|"31. Atualiza"| CampaignDB
+            Monitor -->|"32. Notifica"| UI
+
+            %% Aplicar Estilos
+            class UI,CampaignForm,ContactUpload,TemplateEditor,Scheduler ui
+            class CampaignController,ValidationService,CampaignService,ScheduleService,TemplateService,ContactService campaign
+            class MessageQueue,RetryQueue,DelayQueue,PriorityQueue queue
+            class CampaignDB,ContactDB,TemplateDB,MessageDB,MediaDB storage
+            class Analytics,Logger,Monitor,Alerts,Reports monitor
+    </div>
+</body>
+</html> 

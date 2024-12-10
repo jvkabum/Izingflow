@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IzingFlow - Frontend: Relatórios</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/menu-style.css">
+    <link rel="stylesheet" href="../assets/css/diagram-selector.css">
+    <script src="../assets/js/menus/frontend-menu.js"></script>
+    <script src="../assets/js/menu-manager.js"></script>
+    <script src="../assets/js/mermaid-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <script src="../assets/js/auto-direction.js"></script>
+    <script src="../assets/js/export-diagram.js"></script>
+    <script src="../assets/js/diagram-types.js"></script>
+    <script src="../assets/js/diagram-selector.js"></script>
+    <script src="../assets/js/diagram-direction.js"></script>
+    <script src="../assets/js/zoom-control.js"></script>
+    <script src="../assets/js/init.js"></script>
+</head>
+<body>
+    <div class="diagram-title">Frontend: Relatórios</div>
+    <div class="diagram-description">
+        Este diagrama demonstra o sistema de relatórios no frontend.
+    </div>
+
+    <div class="mermaid">
+        graph LR
+            %% Definição de Estilos
+            classDef report fill:#4A90E2,stroke:#357ABD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef data fill:#27AE60,stroke:#219A52,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef chart fill:#F39C12,stroke:#E67E22,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef action fill:#9B59B6,stroke:#8E44AD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+
+            %% Relatórios
+            Dashboard["📊 Dashboard"]
+            Performance["📈 Performance"]
+            Analytics["📉 Analytics"]
+            Metrics["📏 Métricas"]
+            
+            %% Dados
+            Messages["💬 Mensagens"]
+            Users["👥 Usuários"]
+            Tickets["🎫 Tickets"]
+            Campaigns["📢 Campanhas"]
+            
+            %% Gráficos
+            Charts["📊 Gráficos"]
+            Tables["📋 Tabelas"]
+            KPIs["🎯 KPIs"]
+            Timeline["📅 Timeline"]
+            
+            %% Ações
+            Export["📤 Exportar"]
+            Filter["🔍 Filtrar"]
+            Schedule["⏰ Agendar"]
+            Share["📧 Compartilhar"]
+            
+            %% Fluxo
+            Dashboard --> Performance
+            Dashboard --> Analytics
+            Dashboard --> Metrics
+            
+            Messages --> Charts
+            Users --> Tables
+            Tickets --> KPIs
+            Campaigns --> Timeline
+            
+            Charts --> Export
+            Tables --> Filter
+            KPIs --> Schedule
+            Timeline --> Share
+            
+            %% Aplicar Estilos
+            class Dashboard,Performance,Analytics,Metrics report
+            class Messages,Users,Tickets,Campaigns data
+            class Charts,Tables,KPIs,Timeline chart
+            class Export,Filter,Schedule,Share action
+    </div>
+</body>
+</html> 

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IzingFlow - Sistema: Monitoramento</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/menu-style.css">
+    <link rel="stylesheet" href="../assets/css/diagram-selector.css">
+    <script src="../assets/js/menus/sistema-menu.js"></script>
+    <script src="../assets/js/menu-manager.js"></script>
+    <script src="../assets/js/mermaid-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <script src="../assets/js/auto-direction.js"></script>
+    <script src="../assets/js/export-diagram.js"></script>
+    <script src="../assets/js/diagram-types.js"></script>
+    <script src="../assets/js/diagram-selector.js"></script>
+    <script src="../assets/js/diagram-direction.js"></script>
+    <script src="../assets/js/zoom-control.js"></script>
+    <script src="../assets/js/init.js"></script>
+</head>
+<body>
+    <div class="diagram-title">Sistema: Monitoramento</div>
+    <div class="diagram-description">
+        Este diagrama demonstra o sistema de monitoramento e análise.
+    </div>
+
+    <div class="mermaid">
+        graph LR
+            %% Definição de Estilos
+            classDef coleta fill:#4A90E2,stroke:#357ABD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef processamento fill:#27AE60,stroke:#219A52,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef analise fill:#F39C12,stroke:#E67E22,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef alerta fill:#9B59B6,stroke:#8E44AD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+
+            %% Coleta de Dados
+            Metricas["📊 Métricas"]
+            Logs["📝 Logs"]
+            Eventos["🎯 Eventos"]
+            Traces["🔍 Traces"]
+            
+            %% Processamento
+            Agregacao["🔄 Agregação"]
+            Filtragem["🎯 Filtragem"]
+            Correlacao["🔗 Correlação"]
+            Enriquecimento["✨ Enriquecimento"]
+            
+            %% Análise
+            Tendencias["📈 Tendências"]
+            Anomalias["⚠️ Anomalias"]
+            Previsoes["🔮 Previsões"]
+            Insights["💡 Insights"]
+            
+            %% Alertas
+            Notificacoes["🔔 Notificações"]
+            Escalamento["⬆️ Escalamento"]
+            Acoes["⚡ Ações"]
+            Dashboard["📊 Dashboard"]
+            
+            %% Fluxo Principal
+            Metricas --> Agregacao
+            Logs --> Filtragem
+            Eventos --> Correlacao
+            Traces --> Enriquecimento
+            
+            %% Fluxo Processamento
+            Agregacao --> Tendencias
+            Filtragem --> Anomalias
+            Correlacao --> Previsoes
+            Enriquecimento --> Insights
+            
+            %% Fluxo Análise
+            Tendencias --> Notificacoes
+            Anomalias --> Escalamento
+            Previsoes --> Acoes
+            Insights --> Dashboard
+            
+            %% Conexões Cruzadas
+            Anomalias --> Notificacoes
+            Previsoes --> Escalamento
+            Tendencias --> Acoes
+            Insights --> Notificacoes
+            
+            %% Aplicar Estilos
+            class Metricas,Logs,Eventos,Traces coleta
+            class Agregacao,Filtragem,Correlacao,Enriquecimento processamento
+            class Tendencias,Anomalias,Previsoes,Insights analise
+            class Notificacoes,Escalamento,Acoes,Dashboard alerta
+    </div>
+</body>
+</html> 

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IzingFlow - Backend: Autenticação</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/menu-style.css">
+    <link rel="stylesheet" href="../assets/css/diagram-selector.css">
+    <script src="../assets/js/menus/backend-menu.js"></script>
+    <script src="../assets/js/menu-manager.js"></script>
+    <script src="../assets/js/mermaid-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <script src="../assets/js/auto-direction.js"></script>
+    <script src="../assets/js/export-diagram.js"></script>
+    <script src="../assets/js/diagram-types.js"></script>
+    <script src="../assets/js/diagram-selector.js"></script>
+    <script src="../assets/js/diagram-direction.js"></script>
+    <script src="../assets/js/zoom-control.js"></script>
+    <script src="../assets/js/init.js"></script>
+</head>
+<body>
+    <div class="diagram-title">Backend: Autenticação</div>
+    <div class="diagram-description">
+        Este diagrama demonstra o fluxo de autenticação e autorização do sistema.
+    </div>
+
+    <div class="mermaid">
+        graph LR
+            %% Definição de Estilos
+            classDef autenticacao fill:#4A90E2,stroke:#357ABD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef autorizacao fill:#27AE60,stroke:#219A52,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef sessao fill:#F39C12,stroke:#E67E22,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef seguranca fill:#9B59B6,stroke:#8E44AD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+
+            %% Autenticação
+            Login["🔑 Login"]
+            Registro["📝 Registro"]
+            RecuperarSenha["🔄 Recuperar Senha"]
+            ValidarEmail["✉️ Validar Email"]
+            
+            %% Autorização
+            Permissoes["👮 Permissões"]
+            Papeis["👥 Papéis"]
+            Grupos["👥 Grupos"]
+            Politicas["📜 Políticas"]
+            
+            %% Sessão
+            GerenciadorSessao["🔄 Gerenciador Sessão"]
+            TokenJWT["🎫 Token JWT"]
+            Cache["💨 Cache"]
+            Cookies["🍪 Cookies"]
+            
+            %% Segurança
+            Criptografia["🔐 Criptografia"]
+            ValidacaoToken["✅ Validação Token"]
+            LogsAcesso["📝 Logs Acesso"]
+            Bloqueio["🚫 Bloqueio"]
+            
+            %% Fluxo Principal
+            Login --> Permissoes
+            Registro --> ValidarEmail
+            RecuperarSenha --> ValidarEmail
+            
+            %% Fluxo Autorização
+            Permissoes --> Papeis
+            Papeis --> Grupos
+            Grupos --> Politicas
+            
+            %% Fluxo Sessão
+            Login --> GerenciadorSessao
+            GerenciadorSessao --> TokenJWT
+            TokenJWT --> Cache
+            Cache --> Cookies
+            
+            %% Fluxo Segurança
+            Login --> Criptografia
+            TokenJWT --> ValidacaoToken
+            ValidacaoToken --> LogsAcesso
+            LogsAcesso --> Bloqueio
+            
+            %% Aplicar Estilos
+            class Login,Registro,RecuperarSenha,ValidarEmail autenticacao
+            class Permissoes,Papeis,Grupos,Politicas autorizacao
+            class GerenciadorSessao,TokenJWT,Cache,Cookies sessao
+            class Criptografia,ValidacaoToken,LogsAcesso,Bloqueio seguranca
+    </div>
+</body>
+</html> 

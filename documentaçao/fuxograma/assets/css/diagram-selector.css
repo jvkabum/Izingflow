@@ -1,0 +1,58 @@
+.diagram-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transform: scale(0.9);
+    transform-origin: top center;
+}
+
+.diagram-type {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background: #f8f9fa;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: fit-content;
+    white-space: nowrap;
+    &[data-type="class"] {
+        min-width: 160px;
+        padding-right: 20px;
+    }
+}
+
+.diagram-type:hover {
+    background: #1976d2;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.diagram-type.active {
+    background: #1976d2;
+    color: white;
+}
+
+.diagram-type .icon {
+    font-size: 0.9em;
+}
+
+.diagram-type .arrow {
+    opacity: 0.5;
+    font-size: 0.75em;
+    margin-left: 4px;
+}
+
+.diagram-type .label {
+    flex: 1;
+    padding: 0 4px;
+}
+ 

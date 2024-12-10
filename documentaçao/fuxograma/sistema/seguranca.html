@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IzingFlow - Sistema: Segurança</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/menu-style.css">
+    <link rel="stylesheet" href="../assets/css/diagram-selector.css">
+    <script src="../assets/js/menus/sistema-menu.js"></script>
+    <script src="../assets/js/menu-manager.js"></script>
+    <script src="../assets/js/mermaid-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <script src="../assets/js/auto-direction.js"></script>
+    <script src="../assets/js/export-diagram.js"></script>
+    <script src="../assets/js/diagram-types.js"></script>
+    <script src="../assets/js/diagram-selector.js"></script>
+    <script src="../assets/js/diagram-direction.js"></script>
+    <script src="../assets/js/zoom-control.js"></script>
+    <script src="../assets/js/init.js"></script>
+</head>
+<body>
+    <div class="diagram-title">Sistema: Segurança</div>
+    <div class="diagram-description">
+        Este diagrama demonstra as camadas de segurança do sistema.
+    </div>
+
+    <div class="mermaid">
+        graph LR
+            %% Definição de Estilos
+            classDef acesso fill:#4A90E2,stroke:#357ABD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef protecao fill:#27AE60,stroke:#219A52,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef dados fill:#F39C12,stroke:#E67E22,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+            classDef monitoramento fill:#9B59B6,stroke:#8E44AD,color:#FFFFFF,stroke-width:4px,rx:15,ry:15;
+
+            %% Controle de Acesso
+            Autenticacao["🔐 Autenticação"]
+            Autorizacao["🎫 Autorização"]
+            Sessao["🔑 Sessão"]
+            Token["🎟️ Token"]
+            
+            %% Proteção
+            Firewall["🛡️ Firewall"]
+            SSL["🔒 SSL/TLS"]
+            WAF["🚧 WAF"]
+            AntiDDOS["🛑 Anti-DDOS"]
+            
+            %% Dados
+            Criptografia["🔏 Criptografia"]
+            Backup["💾 Backup"]
+            Logs["📝 Logs"]
+            Auditoria["🔍 Auditoria"]
+            
+            %% Monitoramento
+            Alertas["🚨 Alertas"]
+            Incidentes["⚠️ Incidentes"]
+            Relatorios["📊 Relatórios"]
+            Analise["📈 Análise"]
+            
+            %% Fluxo Principal
+            Autenticacao --> Autorizacao
+            Autorizacao --> Sessao
+            Sessao --> Token
+            
+            %% Fluxo Proteção
+            Firewall --> SSL
+            SSL --> WAF
+            WAF --> AntiDDOS
+            
+            %% Fluxo Dados
+            Criptografia --> Backup
+            Backup --> Logs
+            Logs --> Auditoria
+            
+            %% Fluxo Monitoramento
+            Alertas --> Incidentes
+            Incidentes --> Relatorios
+            Relatorios --> Analise
+            
+            %% Conexões Cruzadas
+            Autenticacao --> Logs
+            Firewall --> Alertas
+            SSL --> Criptografia
+            WAF --> Incidentes
+            
+            %% Aplicar Estilos
+            class Autenticacao,Autorizacao,Sessao,Token acesso
+            class Firewall,SSL,WAF,AntiDDOS protecao
+            class Criptografia,Backup,Logs,Auditoria dados
+            class Alertas,Incidentes,Relatorios,Analise monitoramento
+    </div>
+</body>
+</html> 
