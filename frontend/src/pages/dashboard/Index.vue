@@ -179,6 +179,7 @@
                 <p class="text-h5 text-bold text-center">
                   <q-icon name="mdi-timer-sand" size="lg" color="white" class="text-white" />
                   {{ cTmeFormat }}
+                  </p>
                 Tempo Médio 1º Resposta
               </q-card-section>
             </q-card>
