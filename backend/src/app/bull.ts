@@ -11,23 +11,18 @@ export default async function bullMQ(app) {
   await Queue.process();
 
   // Adiciona tarefas programadas às filas
-  // Comentado: await Queue.add("VerifyScheduleMessages", {});
+  await Queue.add("SendMessageWhatsappCampaign", {}); // Adicionando o job aqui
+  
   
   // Adiciona tarefa para verificar tickets inativos do chatbot
-  // Esta fila monitora e processa tickets que não têm atividade recente
   await Queue.add("VerifyTicketsChatBotInactives", {});
 
   // Adiciona tarefa para envio de mensagens agendadas
-  // Esta fila gerencia o envio de mensagens programadas para horários específicos
   await Queue.add("SendMessageSchenduled", {});
 
   // Em ambiente de desenvolvimento, configura interface de administração das filas
   if (process.env.NODE_ENV !== "production") {
-    // Configura adaptadores para visualização das filas no painel admin
     setQueues(Queue.queues.map((q: any) => new BullAdapter(q.bull) as any));
-    
-    // Adiciona rota para acessar o painel de administração das filas
-    // Acessível em /admin/queues
     app.use("/admin/queues", bullRoute);
   }
 }

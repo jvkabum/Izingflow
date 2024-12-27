@@ -1,14 +1,14 @@
 /* eslint-disable camelcase */
-import { Client, LocalAuth, DefaultOptions } from "whatsapp-web.js"; 
-import path from "path"; 
-import { rm } from "fs/promises"; 
-import { getIO } from "./socket"; 
-import Whatsapp from "../models/Whatsapp"; 
-import { logger } from "../utils/logger"; 
-import SyncUnreadMessagesWbot from "../services/WbotServices/SyncUnreadMessagesWbot"; 
-import Queue from "./Queue"; 
-import AppError from "../errors/AppError"; 
-const minimalArgs = require('./minimalArgs'); 
+import { Client, LocalAuth, DefaultOptions } from "whatsapp-web.js";
+import path from "path";
+import { rm } from "fs/promises";
+import { getIO } from "./socket";
+import Whatsapp from "../models/Whatsapp";
+import { logger } from "../utils/logger";
+import SyncUnreadMessagesWbot from "../services/WbotServices/SyncUnreadMessagesWbot";
+import Queue from "./Queue";
+import AppError from "../errors/AppError";
+const minimalArgs = require('./minimalArgs');
 
 // ====================
 // Definição da Interface
@@ -199,7 +199,7 @@ export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
         }
 
         wbot.sendPresenceAvailable(); // Envia presença disponível
-        SyncUnreadMessagesWbot(wbot, tenantId); // Sincroniza mensagens não lidas
+        SyncUnreadMessagesWbot(false, wbot, tenantId); // Sincroniza mensagens não lidas (corrigido)
         resolve(wbot); // Retorna a sessão
       });
 
