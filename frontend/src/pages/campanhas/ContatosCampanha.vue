@@ -490,7 +490,7 @@ export default {
       return estadosBR.find(e => e.sigla === estadoPorDdd[ddd])?.nome || ''
     },
     async addContatosCampanha () {
-      if (this.selected.length > 300) {
+      if (this.selected.length > 1000) {
         this.$q.notify({
           type: 'negative',
           message: 'O número máximo de contatos é 300'
