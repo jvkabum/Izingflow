@@ -89,7 +89,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
   // eslint-disable-next-line no-restricted-globals
   if (isNaN(parsedIdMessagem)) {
     // Se o ID não for um número válido, registrar o erro ou continuar sem buscar FastReply
-    console.error(`ID da mensagem inválido: ${idMessagem}`);
+    //console.error(`ID da mensagem rapida inválido: ${idMessagem}`);
   } else {
     try {
       const fastReply = await FastReply.findOne({
