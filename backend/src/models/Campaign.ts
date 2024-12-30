@@ -36,6 +36,10 @@ class Campaign extends Model<Campaign> {
   @Column
   start: Date;
 
+  // Data de término da campanha
+  @Column
+  end: Date;
+
   // Status da campanha
   // pending: Pendente
   // scheduled: Agendada
@@ -166,6 +170,18 @@ class Campaign extends Model<Campaign> {
     );
     return newInstances;
   }
+
+  // Total de mensagens da campanha
+  @Column(DataType.INTEGER)
+  totalMessages: number;
+
+  // Mensagens enviadas com sucesso
+  @Column(DataType.INTEGER)
+  sentMessages: number;
+
+  // Mensagens com falha
+  @Column(DataType.INTEGER)
+  failedMessages: number;
 }
 
 export default Campaign;

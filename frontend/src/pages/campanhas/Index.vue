@@ -163,7 +163,8 @@ export default {
         scheduled: 'Programada',
         processing: 'Processando',
         canceled: 'Cancelada',
-        finished: 'Finalizada'
+        finished: 'Finalizada',
+        failed: 'Falhou'
       }
     }
   },
@@ -187,8 +188,8 @@ export default {
       }
       this.campanhaEdicao = {
         ...campanha,
-        start: campanha.start, // format(parseISO(campanha.start), 'yyyy-MM-dd'),
-        end: campanha.start // format(parseISO(campanha.start), 'yyyy-MM-dd')
+        start: campanha.start,
+        end: campanha.start
       }
       this.modalCampanha = true
     },
