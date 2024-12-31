@@ -1,12 +1,10 @@
 /* eslint-disable prefer-destructuring */
 import fs from "fs";
-// import { promisify } from "util";
 import { join } from "path";
 import axios from "axios";
 import mime from "mime";
 import { v4 as uuidv4 } from "uuid";
 import { logger } from "../../utils/logger";
-// import MessageOffLine from "../../models/MessageOffLine";
 import Ticket from "../../models/Ticket";
 import Message from "../../models/Message";
 import socketEmit from "../../helpers/socketEmit";
@@ -35,7 +33,6 @@ interface MessageData {
   userId?: string | number;
   quotedMsgId?: string;
   quotedMsg?: any;
-  // status?: string;
   scheduleDate?: string | Date;
   sendType?: string;
   status?: string;
@@ -62,8 +59,6 @@ interface Request {
   userId?: number | string;
   idFront?: string;
 }
-
-// const writeFileAsync = promisify(writeFile);
 
 const downloadMedia = async (msg: any): Promise<any> => {
   try {
@@ -136,7 +131,7 @@ const CreateMessageSystemService = async ({
     body: Array.isArray(msg.body) ? undefined : msg.body,
     contactId: ticket.contactId,
     fromMe: sendType === "API" ? true : msg?.fromMe,
-    read: true,
+    read: sendType === "API" ? true : msg?.read,
     mediaType: "chat",
     mediaUrl: undefined,
     mediaName: undefined,
@@ -156,7 +151,6 @@ const CreateMessageSystemService = async ({
     // Alter template message
     if (msg.body && !Array.isArray(msg.body)) {
       messageData.body = pupa(msg.body || "", {
-        // greeting: será considerado conforme data/hora da mensagem internamente na função pupa
         protocol: ticket.protocol,
         name: ticket.contact.name
       });
@@ -236,8 +230,14 @@ const CreateMessageSystemService = async ({
 
           await ticket.update({
             lastMessage: messageCreated.body,
-            lastMessageAt: new Date().getTime()
+            lastMessageAt: new Date().getTime(),
+            answered: true
           });
+
+          // Atualiza o contador de mensagens não lidas se a mensagem não for lida
+          if (!messageData.read) {
+            await ticket.increment('unreadMessages');
+          }
 
           socketEmit({
             tenantId,
@@ -286,7 +286,6 @@ const CreateMessageSystemService = async ({
       });
 
       if (!messageCreated) {
-        // throw new AppError("ERR_CREATING_MESSAGE", 501);
         throw new Error("ERR_CREATING_MESSAGE_SYSTEM");
       }
 
@@ -295,6 +294,11 @@ const CreateMessageSystemService = async ({
         lastMessageAt: new Date().getTime(),
         answered: true
       });
+
+      // Atualiza o contador de mensagens não lidas se a mensagem não for lida
+      if (!messageData.read) {
+        await ticket.increment('unreadMessages');
+      }
 
       socketEmit({
         tenantId,
