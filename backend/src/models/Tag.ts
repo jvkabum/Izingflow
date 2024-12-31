@@ -51,6 +51,10 @@ class Tags extends Model<Tags> {
   @Column
   userId: number;
 
+  // Coluna para tag automática
+  @Column
+  autoTag: string; // Nova coluna para indicar se a tag é automática
+
   // Relacionamento com o usuário
   @BelongsTo(() => User)
   user: User;

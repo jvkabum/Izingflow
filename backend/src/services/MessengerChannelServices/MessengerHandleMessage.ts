@@ -88,7 +88,7 @@ const MessengerHandleMessage = async (
           await MessengerVerifyMessage(msgData, ticket, contact);
         }
         await VerifyStepsChatFlowTicket(msgData, ticket);
-
+        
         await verifyBusinessHours(msgData, ticket);
         resolve();
       } catch (error) {
