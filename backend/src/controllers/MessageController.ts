@@ -145,6 +145,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
 
   // Envia a mensagem com ou sem mídias
   try {
+    // Prepara o payload da mensagem com todos os dados necessários
     const messagePayload: any = {
       msg: messageData,
       tenantId,
