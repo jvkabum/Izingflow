@@ -21,6 +21,7 @@ import { logger } from "../utils/logger";
 // import SendWhatsAppMedia from "../services/WbotServices/SendWhatsAppMedia";
 // import SendWhatsAppMessage from "../services/WbotServices/SendWhatsAppMessage";
 import EditWhatsAppMessage from "../services/WbotServices/EditWhatsAppMessage";
+import HandleMessageReceivedService from "../services/MessageServices/HandleMessageReceivedService";
 
 /**
  * Interface para parâmetros de paginação na listagem de mensagens
@@ -106,7 +107,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
             medias.push(mediaFile); // Adiciona o arquivo diretamente na lista de mídias
           }
           // Envia a mensagem com ou sem mídias
-          await CreateMessageSystemService({
+          const message = await CreateMessageSystemService({
             msg: messageData,
             tenantId,
             medias, // Enviando as mídias atualizadas (incluso o arquivo do fastReply se houver)
@@ -117,6 +118,17 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
             status: "pending",
             idFront: messageData.idFront
           });
+
+          // Verifica se a mensagem foi criada e não é do usuário para processar auto-tag
+          if (message !== null && message !== undefined && typeof messageData.fromMe === 'boolean' && !messageData.fromMe) {
+            const handleMessageReceived = new HandleMessageReceivedService();
+            await handleMessageReceived.execute({
+              message,
+              contact: ticket.contact,
+              tenantId: Number(tenantId)
+            });
+          }
+
           // Separando o corpo da mensagem em caso de mensagem com ID
           if (messageData.body.includes("] - ")) {
             const idPattern = /^\[\d+\]\s-\s/; // Regex para capturar o padrão "[ID] - "
@@ -125,7 +137,9 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
               messageData.body = messageData.body.replace(idPattern, "").trim(); // Remove o ID e ajusta o corpo
             }
           }
-          await CreateMessageSystemService({
+
+          // Cria uma segunda mensagem sem o ID da resposta rápida
+          const secondMessage = await CreateMessageSystemService({
             msg: messageData,
             tenantId,
             ticket,
@@ -135,6 +149,17 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
             status: "pending",
             idFront: messageData.idFront
           });
+
+          // Verifica se a segunda mensagem foi criada e não é do usuário para processar auto-tag
+          if (secondMessage !== null && secondMessage !== undefined && typeof messageData.fromMe === 'boolean' && !messageData.fromMe) {
+            const handleMessageReceived = new HandleMessageReceivedService();
+            await handleMessageReceived.execute({
+              message: secondMessage,
+              contact: ticket.contact,
+              tenantId: Number(tenantId)
+            });
+          }
+
           return res.send();
         }
       }
@@ -145,6 +170,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
 
   // Envia a mensagem com ou sem mídias
   try {
+    // Prepara o payload da mensagem com todos os dados necessários
     const messagePayload: any = {
       msg: messageData,
       tenantId,
@@ -161,7 +187,18 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
       messagePayload.medias = medias; // Adiciona apenas se houver mídias
     }
 
-    await CreateMessageSystemService(messagePayload);
+    // Cria a mensagem no sistema
+    const message = await CreateMessageSystemService(messagePayload);
+
+    // Verifica se a mensagem foi criada e não é do usuário para processar auto-tag
+    if (message !== null && message !== undefined && typeof messageData.fromMe === 'boolean' && !messageData.fromMe) {
+      const handleMessageReceived = new HandleMessageReceivedService();
+      await handleMessageReceived.execute({
+        message,
+        contact: ticket.contact,
+        tenantId: Number(tenantId)
+      });
+    }
 
     return res.send();
   } catch (error) {

@@ -1,4 +1,5 @@
 import { logger } from "../../utils/logger";
+import UpdateContactTagsService from "../ContactServices/UpdateContactTagsService"; // Importando o serviço
 import FindOrCreateTicketService from "../TicketServices/FindOrCreateTicketService";
 import { MessengerRequestBody } from "./MessengerTypes";
 import { getMessengerBot } from "../../libs/messengerBot";
@@ -87,8 +88,17 @@ const MessengerHandleMessage = async (
         } else {
           await MessengerVerifyMessage(msgData, ticket, contact);
         }
-        await VerifyStepsChatFlowTicket(msgData, ticket);
+        // Verifica se a mensagem corresponde ao autoTag do contato
+        const autoTag = contact.autoTag; // Supondo que o autoTag esteja disponível no objeto contact
+        if (msgData.body === autoTag) {
+          await UpdateContactTagsService({
+            tags: [autoTag], // Atribui a tag correspondente
+            contactId: contact.id,
+            tenantId: channel.tenantId
+          });
+        }
 
+        await VerifyStepsChatFlowTicket(msgData, ticket);
         await verifyBusinessHours(msgData, ticket);
         resolve();
       } catch (error) {

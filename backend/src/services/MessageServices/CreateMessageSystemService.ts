@@ -4,6 +4,7 @@ import { join } from "path";
 import axios from "axios";
 import mime from "mime";
 import { v4 as uuidv4 } from "uuid";
+import * as ContactController from "../../controllers/ContactController"; // Importação correta para exportação nomeada
 import { logger } from "../../utils/logger";
 import Ticket from "../../models/Ticket";
 import Message from "../../models/Message";
@@ -17,6 +18,8 @@ import InstagramSendMessagesSystem from "../InstagramBotServices/InstagramSendMe
 import TelegramSendMessagesSystem from "../TbotServices/TelegramSendMessagesSystem";
 import { getTbot } from "../../libs/tbot";
 import SendMessageSystemProxy from "../../helpers/SendMessageSystemProxy";
+import ListTagService from "../TagServices/ListTagService"; // Importando ListTagService
+import UpdateContactTagsService from "../ContactServices/UpdateContactTagsService"; // Importando UpdateContactTagsService
 
 interface MessageData {
   ticketId: number;
@@ -126,6 +129,19 @@ const CreateMessageSystemService = async ({
   status,
   idFront
 }: Request): Promise<void> => {
+  // Nova lógica para atribuir tags automaticamente
+  const tags = await ListTagService({ tenantId });
+  const autoTags = tags.filter(tag => msg.body.includes(tag.autoTag));
+
+  if (autoTags.length > 0) {
+    const tagIds = autoTags.map(tag => tag.id);
+    await UpdateContactTagsService({
+      tags: tagIds,
+      contactId: String(ticket.contactId),
+      tenantId
+    });
+  }
+
   const messageData: MessageData = {
     ticketId: ticket.id,
     body: Array.isArray(msg.body) ? undefined : msg.body,
