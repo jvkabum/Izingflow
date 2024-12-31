@@ -1,5 +1,7 @@
 import Message from "../../models/Message";
 import Ticket from "../../models/Ticket";
+import Tag from "../../models/Tag"; // Importando o modelo Tag
+import ContactTag from "../../models/ContactTag"; // Importando o modelo ContactTag
 import socketEmit from "../../helpers/socketEmit";
 
 interface MessageData {
@@ -50,6 +52,30 @@ const CreateMessageService = async ({
 
   if (!message) {
     throw new Error("ERR_CREATING_MESSAGE");
+  }
+
+  // Lógica para atribuir a tag ao ticket se a mensagem corresponder ao autoTag
+  const tags = await Tag.findAll({ where: { tenantId } }); // Buscando todas as tags
+  const matchingTag = tags.find(tag =>
+    messageData.body.trim().toLowerCase() === tag.autoTag.trim().toLowerCase()
+  );
+
+  if (matchingTag) {
+    const ticket = await Ticket.findByPk(messageData.ticketId); // Buscando o ticket
+    if (ticket) {
+      const contactTags = await ContactTag.findAll({
+        where: { contactId: ticket.contactId, tagId: matchingTag.id }
+      }); // Verificando se o contato já tem a tag
+
+      if (contactTags.length === 0) {
+        // Adicionando a tag ao contato se não existir
+        await ContactTag.create({
+          contactId: ticket.contactId,
+          tagId: matchingTag.id,
+          tenantId
+        });
+      }
+    }
   }
 
   socketEmit({
