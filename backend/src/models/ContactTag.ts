@@ -7,7 +7,8 @@ import {
   PrimaryKey,
   AutoIncrement,
   ForeignKey,
-  BelongsTo
+  BelongsTo,
+  Index
 } from "sequelize-typescript";
 import Contact from "./Contact";
 import Tag from "./Tag";
@@ -24,6 +25,7 @@ class ContactTag extends Model<ContactTag> {
   id: number;
 
   // ID do contato
+  @Index
   @ForeignKey(() => Contact)
   @Column
   contactId: number;
@@ -33,6 +35,7 @@ class ContactTag extends Model<ContactTag> {
   contact: Contact;
 
   // ID da tag
+  @Index
   @ForeignKey(() => Tag)
   @Column
   tagId: number;
