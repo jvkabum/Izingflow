@@ -29,6 +29,7 @@ type IndexQuery = {
   queuesIds: string[];      // IDs das filas para filtrar
   isNotAssignedUser: string; // Não atribuídos a usuários
   includeNotQueueDefined: string; // Incluir sem fila definida
+  tags: string[];
 };
 
 /**
@@ -69,7 +70,8 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
     withUnreadMessages,
     queuesIds,
     isNotAssignedUser,
-    includeNotQueueDefined
+    includeNotQueueDefined,
+    tags
   } = req.query as IndexQuery;
 
   const userId = req.user.id;
@@ -86,7 +88,8 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
     isNotAssignedUser,
     includeNotQueueDefined,
     tenantId,
-    profile
+    profile,
+    tags
   });
 
   return res.status(200).json({ tickets, count, hasMore });
