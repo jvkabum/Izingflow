@@ -27,7 +27,7 @@ const SetTicketMessagesAsRead = async (ticket: Ticket): Promise<void> => {
     // Se o canal for WhatsApp, marca as mensagens como vistas no WhatsApp
     if (ticket.channel === "whatsapp") {
       const wbot = await GetTicketWbot(ticket);
-      wbot
+      await wbot
         .sendSeen(`${ticket.contact.number}@${ticket.isGroup ? "g" : "c"}.us`)
         .catch(e => console.error("não foi possível marcar como lido", e));
     }
@@ -40,9 +40,12 @@ const SetTicketMessagesAsRead = async (ticket: Ticket): Promise<void> => {
   } catch (err) {
     // Registra aviso se não conseguir marcar como lido na plataforma
     logger.warn(
-      `Could not mark messages as read. Maybe whatsapp session disconnected? Err: ${err}`
+      `Não foi possível marcar as mensagens como lidas. Sessão do WhatsApp pode estar desconectada. Erro: ${err}`
     );
-    // throw new Error("ERR_WAPP_NOT_INITIALIZED");
+    
+    if (err.message === "ERR_WAPP_NOT_INITIALIZED") {
+      throw new Error("A sessão do WhatsApp não está inicializada. Por favor, reconecte a sessão.");
+    }
   }
 
   // Recarrega o ticket para obter dados atualizados
